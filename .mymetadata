@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SimpleOA Maven Webapp"
+  id="myeclipse.1460017721308"
+  context-root="/SimpleOA"
+  j2ee-spec="6.0"
+  archive="SimpleOA Maven Webapp.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+
