@@ -2,14 +2,19 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                            http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
+	
 	<!-- 区分项目名称，防止默认重名 -->
 	<context-param>
 		<param-name>SimpleOA</param-name>
 		<param-value>com.sun</param-value>
-	</context-param>    <!-- Spring的log4j监听器 -->
+	</context-param>    
+	
+	<!-- Spring的log4j监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>    <!-- 字符集 过滤器 -->
+	</listener>   
+	 
+	<!-- 字符集 过滤器 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -25,7 +30,9 @@
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>    <!-- Spring view分发器 -->
+	</filter-mapping>   
+	
+    <!-- Spring MVC分发器 -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -39,8 +46,23 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 子配置文件位置 -->
+    <context-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>/WEB-INF/spring-*.xml</param-value>  
+    </context-param>  
+    <listener>  
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+    </listener>  
+     
+    <!-- 错误页面 -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/pages/404.jsp</location>
 	</error-page>
+    <error-page>  
+        <error-code>500</error-code>  
+        <location>/WEB-INF/pages/500.jsp</location>  
+    </error-page>  
 </web-app>

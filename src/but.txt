@@ -1,0 +1,5 @@
+<!-- 这里本应该交给spring的sqlSessionFactory的mapperLocations管理并扫描的，但是不知道为什么出现了问题，不能配置，暂且在此手动配置 -->
+<mappers>
+  <mapper resource="com/sun/mappers/userMapper.xml"/>
+</mappers>
+spring中的sqlSessionFactory的bean配置出现问题，不能托管mybatis配置文件的扫描，所以目前暂且在mybatis-config.xml中手动填写mapper的位置

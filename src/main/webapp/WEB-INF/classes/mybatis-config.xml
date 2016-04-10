@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+        <!-- 命名空间 -->
+<!--     <typeAliases> -->
+<!--          <typeAlias alias="User" type="com.sun.dao.User"/>  -->
+<!--     </typeAliases> -->
+
+    <!-- 映射map -->
+    
+    
+   	<!-- 这里本应该交给spring的sqlSessionFactory的mapperLocations管理并扫描的，但是不知道为什么出现了问题，不能配置，暂且在此手动配置 -->
+    <mappers>
+  	  <mapper resource="com/sun/mappers/userMapper.xml"/>
+    </mappers>
+</configuration>

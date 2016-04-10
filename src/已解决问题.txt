@@ -1,0 +1,22 @@
+1.xx-servlet.xml 相当于spring中的applicationContext.xml，如果直接使用即无需applicationContext.xml
+2.classpath: 对应的就是WEB-INF/classes文件夹，如果找不到文件，可以放在此文件夹下，如jdbc.properties
+3.spring自动加载类@Autowired
+4.SpringMVC 控制器返回 new ModelAndView("页面名字")对象
+5.mybatis配置
+              命名空间
+<mapper namespace="com.sun.user">
+    返回结果类型
+	<resultMap id="UserMap" type="com.sun.dao.User">      
+		<id property="id" column="id"/> 
+		<result property="username" column="username"/> 
+	</resultMap> 
+  	查询语句，通过 命名空间+id 来辨识
+    <select id="getUser" parameterType="int" resultMap="UserMap">
+       select * from user where  id=#{id}
+    </select>
+</mapper>
+6.java使用mybatis 
+  1.通过spring自动加载 创建sqlSessionFactory
+  2.获取session，即sqlSessionFactory.openSession();
+  3.session.xxx执行查询
+7.可以在spring中托管所有mybatis的操作，即无需Configuration.xml，只需要在spring的sqlSessionFactory中配置即可。（前提是托管时不会有冲突，如bug.txt中的问题，暂未找到解决办法）
