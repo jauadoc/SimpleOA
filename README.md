@@ -1,5 +1,7 @@
 # SimpleOA
-SimpleOA
+This is a smaller OA System, just have little function for small company.
+
+This is 说明我是一个中国程序员。
 
 ## an OA System for company
 * This is a smaller OA System, just have little function for small company.
