@@ -1,7 +1,7 @@
 			<style type="text/css">
-				/*��һ�֣������Ե��ڣ��Ҳ�̶���   ====�����ʺ�������Ϣ�鿴����ϵ����Ϣ�鿴��*/
+				/*第一种，左侧可以调节，右侧固定。   ====该种适合用于消息查看，联系人信息查看。*/
 				/*.right{position: absolute;left: 70%;top: 5px;}*/
-				/*�ڶ��֣���ͨ���зֲ��֣����ưٶ�����*/
+				/*第二种，普通的中分布局，类似百度那种*/
 				.left{float: left;width: 70%;}
 				.right{margin-left: 70%;}
 				.right .notice{width: 80%;border: solid black 1px;margin-top: 20px;margin-left:10%;}
@@ -12,9 +12,9 @@
 					<html>
 					<head>
 					<meta charset="utf-8">
-					<meta name="keywords" content="Html������" />
-					<meta name="description" content="Html������" />
-					<title>Html������</title>
+					<meta name="keywords" content="Html日历插件" />
+					<meta name="description" content="Html日历插件" />
+					<title>Html日历插件</title>
 					<style type="text/css">
 					body {
 						background-color: #efefef;
@@ -91,7 +91,7 @@
 						text-align: center;
 						cursor: pointer;
 						margin: 0;
-						font-family: "΢���ź�";
+						font-family: "微软雅黑";
 						font-size: 13px;
 					}
 					.item:hover {
@@ -118,7 +118,7 @@
 						float: left;
 						margin: 6px 0 0 5px;
 						color: #009ad6;
-						font-family: "΢���ź�";
+						font-family: "微软雅黑";
 					}
 					#Container {
 						overflow: hidden;
@@ -139,7 +139,7 @@
 					#selectYearDiv>div {
 						float: left;
 						text-align: center;
-						font-family: "΢���ź�";
+						font-family: "微软雅黑";
 						font-size: 16px;
 						border: 1px solid #ccc;
 						margin-left: -1px;
@@ -158,7 +158,7 @@
 						color: #909090;
 						float: left;
 						text-align: center;
-						font-family: "΢���ź�";
+						font-family: "微软雅黑";
 						font-size: 16px;
 						border: 1px solid #ccc;
 						margin-left: -1px;
@@ -173,7 +173,7 @@
 					}
 					/**/
 					/**/
-					.onwork{background: url(<%=path%>/jics/images/right.png) no-repeat;}
+					.onwork{background: url(./right.png) no-repeat;}
 					.workdays{float: right;}
 					.showDateDetail{z-index: 9999999;position: absolute;top: 30%;left: 10%;right: 50%;background: rgba(111,111,111,0.5);}
 					.hidden{display: none;visibility: hidden;}
@@ -181,16 +181,16 @@
 					</head>
 					<body>
 					<div id="CalendarMain">
-					  <div id="title"> <a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014��</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6��</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">����</a></div>
+					  <div id="title"> <a class="selectBtn month" href="javascript:" onclick="CalendarHandler.CalculateLastMonthDays();"><</a><a class="selectBtn selectYear" href="javascript:" onClick="CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart);">2014年</a><a class="selectBtn selectMonth" onClick="CalendarHandler.CreateSelectMonth()">6月</a> <a class="selectBtn nextMonth" href="javascript:" onClick="CalendarHandler.CalculateNextMonthDays();">></a><a class="selectBtn currentDay" href="javascript:" onClick="CalendarHandler.CreateCurrentCalendar(0,0,0);">今天</a></div>
 					  <div id="context">
 					    <div class="week">
-					      <h3> һ </h3>
-					      <h3> �� </h3>
-					      <h3> �� </h3>
-					      <h3> �� </h3>
-					      <h3> �� </h3>
-					      <h3> �� </h3>
-					      <h3> �� </h3>
+					      <h3> 一 </h3>
+					      <h3> 二 </h3>
+					      <h3> 三 </h3>
+					      <h3> 四 </h3>
+					      <h3> 五 </h3>
+					      <h3> 六 </h3>
+					      <h3> 日 </h3>
 					    </div>
 					    <div id="center">
 					      <div id="centerMain">
@@ -204,9 +204,9 @@
 					    <div id="foots">
 					    	<a id="footNow">00:00:00</a>
 					    </div>
-					    <!-- ����ͳ�� -->
-				    	<div id="workdays">&nbsp�����ѹ�����</div>
-				    	<div id="restdays">&nbsp������ٹ��ƣ�</div>
+					    <!-- 工作统计 -->
+				    	<div id="workdays">&nbsp本月已工作：</div>
+				    	<div id="restdays">&nbsp本月请假共计：</div>
 					  </div>
 					</div>
 					</body>
@@ -265,7 +265,7 @@
 									for (var i = showYearStart; i < showYearStart+12; i++) {
 										yearindex++;
 										if(i==showYearStart){
-											$last=$("<div>��ǰ</div>");
+											$last=$("<div>往前</div>");
 											$("#selectYearDiv").append($last);
 											$last.click(function(){
 												CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart-10);
@@ -273,7 +273,7 @@
 											continue;
 										}
 										if(i==showYearStart+11){
-											$next=$("<div>���</div>");
+											$next=$("<div>往后</div>");
 											$("#selectYearDiv").append($next);
 											$next.click(function(){
 												CalendarHandler.CreateSelectYear(CalendarHandler.showYearStart+10);
@@ -317,8 +317,8 @@
 									$(".currentDay").show();
 									$("#selectMonthDiv").children().remove();
 									for (var i = 1; i < 13; i++) {
-										if (i == this.currentMonth) $monthItem=$("<div class=\"currentMontSd\" id=\"" + i + "\">" + i + "��</div>");
-										else  $monthItem=$("<div id=\"" + i + "\">" + i + "��</div>");
+										if (i == this.currentMonth) $monthItem=$("<div class=\"currentMontSd\" id=\"" + i + "\">" + i + "月</div>");
+										else  $monthItem=$("<div id=\"" + i + "\">" + i + "月</div>");
 										$("#selectMonthDiv").append($monthItem);
 										$monthItem.click(function(){
 											$calendarItem=CalendarHandler.CreateCalendar(CalendarHandler.currentYear,Number($(this).attr("id")),1);
@@ -362,7 +362,7 @@
 										mDay = 31;
 									} else {
 										if (m == 2) {
-											//�ж��Ƿ�Ϊ����
+											//判断是否为芮年
 											var isRn = this.IsRuiYear(y);
 											if (isRn == true) {
 												mDay = 29;
@@ -377,7 +377,7 @@
 								},
 								CreateCalendar: function(y, m, d) {
 									$dayItem = $("<div class=\"dayItem\"></div>");
-									//��ȡ��ǰ�·ݵ�����
+									//获取当前月份的天数
 									var nowDate = new Date();
 									if(y==nowDate.getFullYear()&&m==nowDate.getMonth()+1||(y==0&&m==0))
 									$(".currentDay").hide();
@@ -386,30 +386,30 @@
 									var nowMonth = m == 0 ? nowDate.getMonth() + 1 : m;
 									this.currentMonth = nowMonth;
 									var nowDay = d == 0 ? nowDate.getDate() : d;
-									$(".selectYear").html(nowYear + "��");
-									$(".selectMonth").html(nowMonth + "��");
+									$(".selectYear").html(nowYear + "年");
+									$(".selectMonth").html(nowMonth + "月");
 									var nowDaysNub = this.CalculateMonthDays(nowMonth, nowYear);
-									//��ȡ���µ�һ�������ڼ�
+									//获取当月第一天是星期几
 									//var weekDate = new Date(nowYear+"-"+nowMonth+"-"+1);
 									//alert(weekDate.getDay());
 									var nowWeek = parseInt(this.CalculateWeek(nowYear, nowMonth, 1));
 									//nowWeek=weekDate.getDay()==0?7:weekDate.getDay();
 									//var nowWeek=weekDate.getDay();
-									//��ȡ�ϸ��µ�����
+									//获取上个月的天数
 									var lastMonthDaysNub = this.CalculateMonthDays((nowMonth - 1), nowYear);
 
 									if (nowWeek != 0) {
-										//�������ʣ�µ�����
+										//生成上月剩下的日期
 										for (var i = (lastMonthDaysNub - (nowWeek - 1)); i < lastMonthDaysNub; i++) {
 											$dayItem.append("<div class=\"item lastItem\"><a>" + (i + 1) + "</a></div>");
 										}
 									}
 
-									//������Ϣ������ajax�����ڱ?Ȼ���ȡ���¿�����Ϣ��д��ǰ�ˡ�
-									//ajax�������ϰ����ڣ��Լ����¹��������ա�����ͳ�ơ�
+									//考勤信息，这里ajax请求考勤表，然后获取当月考勤信息，写入前端。
+									//ajax请求本月上班日期，以及本月工作多少日。用于统计。
 									$.ajax();
-									alert(nowMonth+"��");
-									//��ɵ��µ�����
+									alert(nowMonth+"月");
+									//生成当月的日期
 									for (var i = 0; i < nowDaysNub; i++) {
 										var work = true;
 										var workdays = 0;
@@ -429,9 +429,9 @@
 									}
 
 
-									//��ȡ�ܹ��Ѿ���ɵ�����
+									//获取总共已经生成的天数
 									var hasCreateDaysNub = nowWeek + nowDaysNub;
-									//���С��42�����¸�������
+									//如果小于42，往下个月推算
 									if (hasCreateDaysNub < 42) {
 										for (var i = 0; i <= (42 - hasCreateDaysNub); i++) {
 											$dayItem.append("<div class=\"item lastItem\"><a>" + (i + 1) + "</a></div>");
@@ -537,42 +537,42 @@
 				</div>
 			</div>
 			<div class="right">
-				����
+				公告
 				<div class="split"></div>
 				<div class="annoucement notice clearfix">
-					--2016��4��2�� 
-					<div>��λԱ����</div>
+					--2016年4月2日 
+					<div>各位员工好</div>
 				</div>
 				<div class="annoucement notice clearfix">
-					--2016��4��2�� 
-					<div>��λԱ����</div>
+					--2016年4月2日 
+					<div>各位员工好</div>
 				</div>
 				<div class="annoucement notice clearfix">
-					--2016��4��2�� 
-					<div>��λԱ����</div>
+					--2016年4月2日 
+					<div>各位员工好</div>
 				</div>
-				����
+				新闻
 				<div class="split"></div>
 				<div class="news notice clearfix">
-					--2016��4��2�� 
-					<div>���������</div>
+					--2016年4月2日 
+					<div>今天天气不错</div>
 				</div>
 				<div class="news notice clearfix">
-					--2016��4��2�� 
-					<div>���������</div>
+					--2016年4月2日 
+					<div>今天天气不错</div>
 				</div>
 				<div class="news notice clearfix">
-					--2016��4��2�� 
-					<div>���������</div>
+					--2016年4月2日 
+					<div>今天天气不错</div>
 				</div>
 				<div class="news notice clearfix">
-					--2016��4��2�� 
-					<div>���������</div>
+					--2016年4月2日 
+					<div>今天天气不错</div>
 				</div>
 			</div>
 			<div class="showDateDetail">
 				<div class="permision datedetail">
-					<div>����</div>
+					<div>任务：</div>
 					<div>
 						<div>1</div>
 						<div>2</div>
@@ -580,7 +580,7 @@
 					</div>
 				</div>
 				<div class="plan datedetail">
-					<div>�ƻ����ţ�</div>
+					<div>计划安排：</div>
 					<div>
 						<div>1</div>
 						<div>2</div>

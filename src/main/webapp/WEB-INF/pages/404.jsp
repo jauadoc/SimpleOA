@@ -8,6 +8,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta content="always" name="referrer">
     <title>没有找到指定文件</title>
 	<style type="text/css">
 	/*-webkit-animation等带-webkit-前缀的为webkit内核浏览器识别，其他为ie9以上及firefox识别*/

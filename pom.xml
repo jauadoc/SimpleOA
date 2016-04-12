@@ -108,6 +108,13 @@
 			<artifactId>druid</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		
+		<!-- jackson依赖 -->
+		<dependency>	
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-lgpl</artifactId>
+			<version>1.7.4</version>	
+		</dependency>
 
 		<!-- json数据 -->
 		<dependency>

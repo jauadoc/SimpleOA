@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sun.dao.User;
 
 @Service
 public class Test {    
@@ -17,7 +16,7 @@ public class Test {
 
 	public void test(){
 		 SqlSession session = getSqlSessionFactory().openSession();
-		 User user = session.selectOne("com.sun.userMapper.getUser",1);
-		 System.out.println(user);
+//		 User user = session.selectOne("com.sun.userMapper.getUser",1);
+//		 System.out.println(user);
 	}
 }

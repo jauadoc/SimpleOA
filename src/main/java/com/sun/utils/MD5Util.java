@@ -45,7 +45,7 @@ public class MD5Util {
     }  
     // 一个简版测试  
     public static void main(String[] args) {  
-        String m1 = md5("1");  
+        String m1 = md5("123");  
         String m2 = md5(m1);  
         /* 输出为 
          * m1=c4ca4238a0b923820dcc509a6f75849b 

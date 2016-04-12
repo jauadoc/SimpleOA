@@ -2,7 +2,12 @@ package com.sun.dao;
 
 import java.util.List;
 import java.util.Map;
- 
+/**
+ * 
+ * @author Administrator
+ *  网上找到的模版=================================================================================
+ * @param <T>
+ */
 public interface CommonDao<T> {
     /**
      * 根据id查找唯一对象

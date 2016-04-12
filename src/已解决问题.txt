@@ -16,7 +16,42 @@
     </select>
 </mapper>
 6.java使用mybatis 
-  1.通过spring自动加载 创建sqlSessionFactory
-  2.获取session，即sqlSessionFactory.openSession();
-  3.session.xxx执行查询
+	1.通过spring自动加载 创建sqlSessionFactory
+	2.获取session，即sqlSessionFactory.openSession();
+	3.session.xxx执行查询
 7.可以在spring中托管所有mybatis的操作，即无需Configuration.xml，只需要在spring的sqlSessionFactory中配置即可。（前提是托管时不会有冲突，如bug.txt中的问题，暂未找到解决办法）
+
+8上传项目到github
+	1.创建resp。
+	2.git clone到本地
+	3.将项目copy到git clone到本地的文件夹
+	4.git add .  ---将项目传到本地版本库
+	5.git commit ---m "备注"
+	6.git push -u origin master  ---通过用户名密码登录并上传到master分支
+9.json格式数据范例   以及json格式化网站
+		http://json.cn/
+{
+    "directory":[
+        {
+            "name":"首页",
+            "img":"3wb.com",
+            "href":"/goPage?pageName=index"
+        },
+        {
+            "name":"联系人",
+            "img":"3wb.com",
+            "href":"/goPage?pageName=person"
+        },
+        {
+            "name":"工作",
+            "img":"3wb.com",
+            "href":"/goPage?pageName=work"
+        },
+        {
+            "name":"消息",
+            "img":"3wb.com",
+            "href":"/goPage?pageName=message"
+        }
+    ],
+    "count":4
+}
