@@ -12,3 +12,18 @@
 	2.登录的业务逻辑和后端已实现，前端差提示信息没做。
 	3.前端的快捷方式提交，考勤_任务及安排，新闻公告
 	4.表添加
+5.2016年4月13日 
+	1.前端和后端数据交流格式-
+		inMessage id data date
+			1.
+				var objx = new Object();
+				objx.xx = "xx";
+				var json = JSON.stringify(xxxObj);
+			2.
+				url:"xxx?date=" + new Date().getTime();
+				data:{uid:uid,data:json}
+		OutMessage status data date
+	2.index首页框架业务写完
+	3.页面跳转goPage拦截器写完
+	4.初步实现前端页面效果，剩下就是逐步开发剩余功能，数据交互和管理按总结结论进行。
+	

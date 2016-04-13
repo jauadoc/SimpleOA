@@ -25,6 +25,7 @@ import com.sun.utils.StrUtil;
 /**
  * 
  * @author javadoc
+ * 首页及基本控制器
  */
 @Controller
 public class GeneralController extends BaseController{
@@ -48,10 +49,6 @@ public class GeneralController extends BaseController{
 	@RequestMapping(value = "test.do")
 	public ModelAndView test_jsp(HttpServletRequest request,  HttpServletResponse response)throws Exception {
 		ModelAndView model = new ModelAndView("test");
-//		SqlSession session = sqlSessionFactory.openSession();
-//		User user = session.selectOne("com.sun.user.getUser",1);
-//		System.out.println(user);
-//		model.addObject("user", user);
 		return model;
 	}
 	/**
@@ -59,6 +56,9 @@ public class GeneralController extends BaseController{
 	 */
 	@RequestMapping(value = "login.do")
 	public ModelAndView login_jsp(HttpServletRequest request,  HttpServletResponse response)throws Exception {
+		if(request.getSession().getAttribute("pageUser")!=null){
+			return new ModelAndView("index");
+		}
 		return new ModelAndView("login");
 	}
 
@@ -94,12 +94,27 @@ public class GeneralController extends BaseController{
 		String json = mapper.writeValueAsString(new OutMessage("success", userRight, DateUtil.yyyyMMdd.format(new Date())));
 		response.getWriter().write(json);
 //		-----------------------------------------------------------------------
-		System.out.println(json);
-		System.out.println("==========================");
+//		System.out.println(json);
+//		System.out.println("==========================");
 //		-----------------------------------------------------------------------
 		Map<String,Object> mv = new HashMap<String,Object>();
 		mv.put("pageUser", pageUser);
-//		return new ModelAndView("index",mv);
 		return null;
+	}
+	/**
+	 * 页面获取转跳控制器
+	 * 
+	 */
+	@RequestMapping(value = "goPage.do")
+	public ModelAndView goPage(HttpServletRequest request,  HttpServletResponse response)throws Exception {
+		String basePath = "content/";
+		String uid = request.getParameter("uid");
+		String pageUrl = basePath + request.getParameter("pageUrl");
+		Map<String,Object> mv = new HashMap<String,Object>();
+		PageUser pageUser = new PageUser(Integer.parseInt(uid), null, null, null, null, 0);
+		mv.put("pageUser", pageUser);
+		ModelAndView model = new ModelAndView(pageUrl,mv);
+		response.setCharacterEncoding("UTF-8");
+		return model;
 	}
 }

@@ -4,6 +4,13 @@ public class OutMessage {
 	String status;
 	String data;
 	String date;
+	int count;
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -22,16 +29,25 @@ public class OutMessage {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
 	@Override
 	public String toString() {
 		return "OutMessage [status=" + status + ", data=" + data + ", date="
-				+ date + "]";
+				+ date + ", count=" + count + "]";
 	}
 	public OutMessage(String status, String data, String date) {
 		super();
 		this.status = status;
 		this.data = data;
 		this.date = date;
+	}
+	
+	public OutMessage(String status, String data, String date, int count) {
+		super();
+		this.status = status;
+		this.data = data;
+		this.date = date;
+		this.count = count;
 	}
 	public OutMessage() {
 		super();

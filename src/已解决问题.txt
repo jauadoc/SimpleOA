@@ -55,3 +55,7 @@
     ],
     "count":4
 }
+10.前端json字符串
+	1.前端创建数据结构对应对象
+	2.stringify(obj) 将对象转为json字符串，传递给服务器端
+11.后端使用jackson 创建对象model解析前端json字符串

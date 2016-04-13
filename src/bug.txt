@@ -1,36 +1,3 @@
-1.
-	<!-- 这里本应该交给spring的sqlSessionFactory的mapperLocations管理并扫描的，但是不知道为什么出现了问题，不能配置，暂且在此手动配置 -->
-	<mappers>
-	  <mapper resource="com/sun/mappers/userMapper.xml"/>
-	</mappers>
-	spring中的sqlSessionFactory的bean配置出现问题，不能托管mybatis配置文件的扫描，所以目前暂且在mybatis-config.xml中手动填写mapper的位置
-2.
-	将项目改成接口式的，不要使用mapper式的
-	1.每个命名空间的mapper创建一个接口，作为该mapper的代理。
-	2.接口中把代理的mapper.xml中的所有sql子项都写成函数
-	3.java语句中不再使用session.xxx()来执行sql，而是使用对应接口的对应函数（好处：使得sql名，参数，返回值等精准，不会出现认为失误而导致CURD失败）
-	4.改成
-		/*这里传递给sqlSession一个接口类，然后底层自动创建一个实现该接口的实体类，返回给IUser,以供使用*/
-		IUser iuser = session.getMapper(IUser.class);
-		User user = iuser.getUser(); 
-	5.mapper配置文件的namespace以代理接口名为命名空间，保证项目内的命名空间无重复。
+1.快捷方式提交的json有问题
+
 	
-3.2016年4月12日
-	0.引入jackson或gson，目前比较倾向于jackson
-		将用户登录写完。
-	1.将    如下 的业务写完。
-		函数-subAddMore    
-	 		1.获取选中的模块
-	 		2.提交数据
-	 		3.刷新左侧
-	 2.index的业务写完
-	 	1.考勤-ajax请求本人的考勤信息，然后将有考勤的日期添加 v 背景图
-	 	2.点击日期，弹出当日的任务和安排
-	 		函数-showDetail
-	 			1.ajax请求获取本人的本日安排和任务
-	 			2.在页面showDateDetail中显示。                  并且，给该模块添加一个x按钮
-	 	3.右侧通知和新闻
-	 		.right中的写，不难应该。
-	 	4.把content的右侧新闻公告设置成overflow:auto。这样如果新闻或公告过多，则不会影响日历的视觉效果-----测试之后再决定
-	 3.将表一览中的表最后3张表添加到数据库里
-	 			

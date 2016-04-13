@@ -7,7 +7,6 @@
 	if(pageUser==null || pageUser==new PageUser()){
 		request.getRequestDispatcher("/login.do").forward(request, response);
 	}
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -20,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/plugin.css">
 	<script type="text/javascript" src="<%=path%>/jics/js/jquery.js"></script>
+	
 	<style type="text/css">
 	</style>
 	<!--[if lt IE 7]>
@@ -34,7 +34,8 @@
 
 	/*通用样式*/
 	.split{border-bottom: 3px solid #0FDBD6;height:8px;content: ".";overflow: hidden;color: white;}
-
+	.float-right{float: right;}
+	.float-left{float: left;}
 	/*布局样式*/
 	html,body,.g-body{height: 100%;overflow: hidden;}
 	.g-left{position: absolute;left: 0px;top:60px;bottom:30px;border-right: #666 solid 1px;width: 200px;background: #313B36;}
@@ -43,11 +44,11 @@
 	.g-footer{position: absolute;left: 0px;bottom: 0px;border-top: #666 solid 1px;width: 100%;height: 30px;}
 
 	/*头模块样式*/
-	.m-head{width: 100%;height: 100%;display: inline-block;}
-	.m-head .sys-title{height: 40px;line-height: 40px;font-size: 36px;margin-left: 20px;display: inline-block;}
+	.m-head{width: 100%;height: 60px;display: table;vertical-align: top;}
+	.m-head .sys-title{width:60%;height: 60px;line-height: 60px;font-size: 36px;margin-left: 20px;display: table-cell;}
 	.m-head .sys-title .logo,.m-head .sys-title .title{display: inline-block;}
-	.m-head .m-nav{float: right;display: inline-block;height: 60px;}
-	.m-head .m-nav .dir{display: table-cell;border-top: solid #CBA 1px;border-left: solid #CBA 1px;width: 120px;color: #FFF;height: 60px;text-align: center;}
+	.m-head .m-nav{display: table-cell;height: 60px;}
+	.m-head .m-nav .dir{display: table-cell;border-top: solid #CBA 1px;border-left: solid #CBA 1px;border-right: solid #CBA 1px;width: 120px;color: #FFF;height: 60px;text-align: center;}
 	.m-head .m-nav .check{background: #0A7E7C;}
 
 	/*左模块样式*/
@@ -69,6 +70,16 @@
 /*注释搜索索引 如下*/
 /*1.======================   -------为需要按注释修改或按业务修改的代码*/
 /*2.测试数据             --------------测试用的数据*/
+	var inMessage = new Object();
+	<%
+		int uid = -1;
+		if(pageUser!=null && pageUser!=new PageUser()){
+			uid = pageUser.getId();
+		}
+	%>
+	inMessage.id = <%=uid %>;
+	inMessage.data;
+	inMessage.date;
 	$().ready(function(){
 		/*获取左侧个人信息*/
 		getGlobalLeft();
@@ -81,9 +92,9 @@
 	}
 	/* 显示弹窗，并请求功能数据 */
 	function showWindow(){
-		$(".m-layer").addClass("m-layer-show");
+		$("#m-apply").addClass("m-layer-show");
 		$.ajax({
-		   url: '/data/getFunction',
+		   url: '/data/getFunction?date='+ new Date().getTime(),
       	   type: 'get',
 		   data:{},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -101,10 +112,14 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				var data = {"functions":[{"name":"审批"},{"name":"审批"},{"name":"审批"},{"name":"审批"},{"name":"审批"}],"count":5};
+				var data = {"functions":[{"name":"审批","isChoose":"no"},{"name":"审批","isChoose":"no"},{"name":"外出","isChoose":"yes"},{"name":"离职","isChoose":"no"},{"name":"请假","isChoose":"yes"},],"count":5};
       			var html = "";
       			for(var i=0;i<data.count;i++){
-      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
+      				if(data.functions[i].isChoose=="no"){
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
+      				}else{
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"' checked></input></div>";
+      				}
       			}
 				$(".functionWindow").html(html);
 			},
@@ -117,7 +132,49 @@
 	}
 	/*提交添加的快捷连接*/
 	function subAddMore(){
-
+		/* 获取前端信息整合为json字符串 */
+		var jsonObj = new Object();
+		var inputs = $(".functionWindow").children("input");
+		inMessage.data = [];
+		inMessage.date = new Date().getTime();
+		var mark = 0;
+		for(var i=0;i<inputs.length;i++){
+			if($(inputs[i]).is(':checked')){
+				jsonObj.func = $(inputs[i]).val();
+				inMessage.data[mark] = jsonObj;
+				mark++;
+			}
+		}
+		var json = JSON.stringify(inMessage);
+		alert(json);
+		/* json发送到服务器 */
+		$.ajax({
+		   url: '/data/addQuickUse?date='+new Date().getTime(),
+      	   type: 'post',
+		   data: json,
+		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		   //调小超时时间会引起异常
+		   timeout: 3000,
+      		//请求成功后触发
+      		success: function (data) {
+      			if(data.status=="success"){
+      				alert(data.data);
+      				hiddenWindow();
+      			}else{
+      				alert(data.data);
+      			}
+				getGlobalLeft();
+			},
+			//请求失败遇到异常触发
+			error: function (xhr, errorInfo, ex) { 
+				$(dtitle).append(errorInfo); 
+			},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+			},
+			//是否异步发送
+			async: true
+		});
 	}
 	/* end-1.快捷方式业务逻辑---------------------------------------- */
 	
@@ -125,19 +182,21 @@
 	/*content转跳至xx页面函数*/
 	function goPage(pageUrl){
 		$.ajax({
-		   url: '/goPage',
+		   url: '<%=path%>/goPage.do?date='+new Date().getTime(),
       	   type: 'get',
-		   data:{},
+		   data:{uid:<%=uid %>,pageUrl:pageUrl},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
-      			/*$("#data").html(data);*/
+      			$("#data").html(data);
+      			/*如果是index页面，需要初始化一下日历空间*/		
+      			CalendarHandler.initialize();
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				$(dtitle).append(errorInfo); 
+				
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -152,7 +211,7 @@
 	/*获取 个人信息 -left*/
 	function getGlobalLeft(){
 		$.ajax({
-		   url: 'http://www.baidu.com',
+		   url: '/data/info?date='+new Date().getTime(),
       	   type: 'get',
 		   data:{uid:'1'},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -163,8 +222,8 @@
 				alert("success in left");
       			/*{"head":"./head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"}*/
       			/*测试数据*/
-      			var data = {"head":"www.baidu.com","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
-      			$("#oa-head").html(data.head);
+      			var data = {"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
+      			$("#oa-head").html("<img src='"+data.head+"'/>");
       			$("#oa-name").html(data.name);
       			$("#oa-job").html(data.job);
       			$("#oa-out").html("退出登录");
@@ -177,13 +236,13 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-// 				alert("error in left");
+				alert("error in left");
 // 				$("#oa-u-use").html("<div onclick='getGlobalLeft()' class='u-btn'>数据请求异常,重新获取</div>"); 
 
 
 
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"head":"www.baidu.com","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
+      			var data = {"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
       			$("#oa-head").html(data.head);
       			$("#oa-name").html(data.name);
       			$("#oa-job").html(data.job);
@@ -210,7 +269,7 @@
 	function getGlobalSystem(){
 		/*{directory:[{name:'首页',img:'3wb.com',href:'/goPage?pageName=index'},{name:'联系人',img:'3wb.com',href:'/goPage?pageName=person},{name:'工作',img:'3wb.com',href:'/goPage?pageName=work},{name:'消息',img:'3wb.com',href:'/goPage?pageName=message}],count:4}*/
 		$.ajax({
-		   url: '/data/system',
+		   url: '/data/system?date='+new Date().getTime(),
       	   type: 'get',
 		   data:{},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -220,12 +279,12 @@
       		success: function (data) {
 				alert("success in system");
       			/*测试数据*/
-      			var data = {"directory":[{"name":"首页","img":"3wb.com","href":"/goPage?pageName=index"},{"name":"联系人","img":"3wb.com","href":"/goPage?pageName=person"},{"name":"工作","img":"3wb.com","href":"/goPage?pageName=work"},{"name":"消息","img":"3wb.com","href":"/goPage?pageName=message"}],"count":4};
+      		    var data = {"directory":[{"name":"首页","img":"3wb.com","href":"index"},{"name":"联系人","img":"3wb.com","href":"person"},{"name":"工作","img":"3wb.com","href":"work"},{"name":"消息","img":"3wb.com","href":"message"}],"count":4};
       			/*从服务器获取首页目录信息*/
       			var dirs = data.directory;
       			var dirHtml = "";
       			for(var i=0;i<data.count;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage("+data.directory[i].href+")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.directory[i].href+"\")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
@@ -236,16 +295,16 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-// 				alert("error in system");
+				alert("error in system");
 
 
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"directory":[{"name":"首页","img":"3wb.com","href":"/goPage?pageName=index"},{"name":"联系人","img":"3wb.com","href":"/goPage?pageName=person"},{"name":"工作","img":"3wb.com","href":"/goPage?pageName=work"},{"name":"消息","img":"3wb.com","href":"/goPage?pageName=message"}],"count":4};
+      			var data = {"directory":[{"name":"首页","img":"test","href":"index"},{"name":"联系人","img":"3wb.com","href":"person"},{"name":"工作","img":"3wb.com","href":"work"},{"name":"消息","img":"3wb.com","href":"message"}],"count":4};
       			/*从服务器获取首页目录信息*/
       			var dirs = data.directory;
       			var dirHtml = "";
       			for(var i=0;i<data.count;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage("+data.directory[i].href+")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.directory[i].href+"\")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
@@ -289,7 +348,7 @@
 	</div>
 	<div class="g-head">
 		<div class="m-head">
-			<div class="sys-title clearfix">
+			<div class="sys-title">
 				<div class="logo"><img src="./logo.png"></div>
 				<div class="title">Simple-OA</div>
 			</div>
@@ -317,42 +376,32 @@
 	<div class="g-content">
 		<div class="data" id="data">
 			<!-- 点击首页，消息，工作，联系人等返回的数据格式 -->
-
-
-
-
 			
-
-
 			<!-- 数据返回结束 -->
 		</div>
-
-	
-<div class="m-layer">
-    <table class="lytable"><tbody><tr><td class="lytd">
-    <div class="lywrap">
-	    <div class="lytt"><h2 class="u-tt">请选择要添加的快捷方式</h2><span class="lyclose" onclick="hiddenWindow()">×</span></div>
-	    <div class="lyct">
-	        <div class="functionWindow">
-				<div class="oneSelect">
-					&nbsp
-				</div>
-	        </div>
-	    </div>
-	    <div class="lybt">
-	        <div class="lyother">
-	            <p>其他信息，比如提示</p>
-	        </div>
-	        <div class="lybtns">
-	            <button type="button" class="u-btn" onclick="subAddMore()">确定</button>
-	            <button type="button" class="u-btn u-btn-c4" onclick="hiddenWindow()">取消</button>
-	        </div>
-	    </div>
-    </div></td></tr></tbody></table>
-</div>
-
-
-		
+		<div class="m-layer" id="m-apply">
+		    <table class="lytable"><tbody><tr><td class="lytd">
+		    <div class="lywrap">
+			    <div class="lytt"><h2 class="u-tt">请选择要添加的快捷方式</h2><span class="lyclose" onclick="hiddenWindow()">×</span></div>
+			    <div class="lyct">
+			        <div class="functionWindow">
+						<div class="oneSelect">
+							&nbsp
+						</div>
+			        </div>
+			    </div>
+			    <div class="lybt">
+			        <div class="lyother">
+			            <p></p>
+			        </div>
+			        <div class="lybtns">
+			            <button type="button" class="u-btn" onclick="subAddMore()">确定</button>
+			            <button type="button" class="u-btn u-btn-c4" onclick="hiddenWindow()">取消</button>
+			        </div>
+			    </div>
+		    </div></td></tr></tbody></table>
+		</div>
+	</div>
 	<div class="g-footer">
 		京ICP证150335号/京公网安备11010802009977 Copyright © 2003-2016 MEISHIJ CO.,LTD.
 	</div>

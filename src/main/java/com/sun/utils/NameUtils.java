@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NameUtils {
-	public String getUnique(){
+	/**
+	 * 根据当前时间戳，返回唯一字母组成字符串
+	 * @return
+	 */
+	public static String getUnique(){
 		Map<Integer, String> n2c = new HashMap<Integer, String>();
 		n2c.put(0, "a");
 		n2c.put(1, "b");
@@ -23,5 +27,9 @@ public class NameUtils {
 			unique += n2c.get(Integer.parseInt(now.substring(i, i+1)));
 		}
 		return unique;
+	}
+	public static void main(String[] args) {
+		String name = getUnique();
+		System.out.println(name);
 	}
 }
