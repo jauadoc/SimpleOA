@@ -116,5 +116,15 @@ public class GeneralController extends BaseController{
 		ModelAndView model = new ModelAndView(pageUrl,mv);
 		response.setCharacterEncoding("UTF-8");
 		return model;
+	}	
+	
+	/**
+	 * 退出登录
+	 * 
+	 */
+	@RequestMapping(value = "logout.do")
+	public ModelAndView getFunction(HttpServletRequest request,  HttpServletResponse response)throws Exception {
+		ModelAndView model = new ModelAndView("logout");
+		return model;
 	}
 }

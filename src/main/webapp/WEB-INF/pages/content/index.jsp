@@ -16,12 +16,10 @@
 /*.right{position: absolute;left: 70%;top: 5px;}*/
 /*第二种，普通的中分布局，类似百度那种*/
 .left {	float: left;width: 70%;}
-
 .right {margin-left: 70%;}
-
 .right .notice {width: 80%;border: solid black 1px;margin-top: 20px;margin-left: 10%;}
-
 .calenderDiv {position: absolute;top: 5px;left: 3px;right: 30%;float: left;}
+.one-mission{margin-left:10px;}
 </style>
 
 
@@ -128,10 +126,10 @@
 			    <div class="lyct">
 			        <div class="dataWindow">
 						<div class="data-mission">
-							任务：不拉不拉布拉
+							<div>任务：</div>
 						</div>
 						<div class="data-calendar">
-							日程：不啊了不拉不拉
+							<div>安排：</div>
 						</div>
 			        </div>
 			    </div>
@@ -151,8 +149,61 @@
 <script type="text/javascript">
 	/* 显示今日细节 */
 	function showDetail(node) {
-		var a = $(node).children("a").html();
-		$(".data-calendar").append(a);
+		var currDay = $(node).children("a").html();
+		$(".data-calendar").html("<div>安排：</div>");
+		$(".data-mission").html("<div>安排：</div>");
+		var inMessage = new Object();
+		inMessage.date = new Date().getTime();
+		inMessage.data = currDay;
+		inMessage.id = <%=uid %>
+		alert(JSON.stringify(inMessage));
+		//请求任务和安排数据
+		$.ajax({
+		   url: '/data/getMission?date='+ new Date().getTime(),
+      	   type: 'get',
+		   data:{uid:<%=uid %>},
+		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		   //调小超时时间会引起异常
+		   timeout: 3000,
+      		//请求成功后触发
+      		success: function (data) {
+      			var data = {"status":"success","data":[{"content":"r1","kind":"calendar"},{"content":"r2","kind":"calendar"},{"content":"m1","kind":"mission"},{"content":"m2","kind":"mission"}],"date":"12312312"};
+				if(data.status=="success"){
+					for(var i=0;i<data.data.length;i++){
+						if(data.data[i].kind=="calendar"){
+							$(".data-calendar").append("<div class='one-mission'>"+data.data.content+"</div>");
+						}else if(data.data[i].kind=="mission"){
+						
+							$(".data-mission").append("<div class='one-mission'>"+data.data.content+"</div>");
+						}
+					}
+				}else{
+					alert("error");
+				}
+			},
+			//请求失败遇到异常触发
+			error: function (xhr, errorInfo, ex) {
+      			var data = {"status":"success","data":[{"content":"r1","kind":"calendar"},{"content":"r2","kind":"calendar"},{"content":"m1","kind":"mission"},{"content":"m2","kind":"mission"}],"date":"12312312"};
+				if(data.status=="success"){
+					for(var i=0;i<data.data.length;i++){
+						if(data.data[i].kind=="calendar"){
+							$(".data-calendar").append("<div class='one-mission'>"+data.data[i].content+"</div>");
+						}else if(data.data[i].kind=="mission"){
+						
+							$(".data-mission").append("<div class='one-mission'>"+data.data[i].content+"</div>");
+						}
+					}
+				}else{
+					alert("error");
+				}
+				
+			},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+			},
+			//是否异步发送
+			async: true
+		});
 		$("#showDetail").addClass("m-layer-show");
 	}
 	$().ready(function(){
@@ -430,9 +481,22 @@
 				   timeout: 3000,
 		      		//请求成功后触发
 		      		success: function (data) {
-		      			
+		      			var data = {"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
+						var worked = data.data[0].workday;
+						var workday = worked.split(",");
+						var nowDaysNub = data.data[0].nowDaysNub;
+						var days = $(".currMon");
+						for(var i=0;i<days.length;i++){
+							var day = $(days[i]).children("a").html();
+							for(var j=0;j<workday.length;j++){
+								if(workday[j]==i){
+									$(days[i]).addClass("onwork");
+								}
+							}
+						}
 					},
 					//请求失败遇到异常触发
+					//{"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
 					error: function (xhr, errorInfo, ex) { 
 						var data = {"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
 						var worked = data.data[0].workday;

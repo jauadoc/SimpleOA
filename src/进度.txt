@@ -14,16 +14,30 @@
 	4.表添加
 5.2016年4月13日 
 	1.前端和后端数据交流格式-
-		inMessage id data date
-			1.
-				var objx = new Object();
-				objx.xx = "xx";
-				var json = JSON.stringify(xxxObj);
-			2.
-				url:"xxx?date=" + new Date().getTime();
-				data:{uid:uid,data:json}
+		inMessage uid data date
+			-前端：
+				1.方式一。拼接后转换  ---------------目前使用方式
+					var inMessage = new Object();
+					inMessage.date = new Date().getTime();
+					inMessage.data = "";
+					inMessage.uid = <%=uid %>;
+					var json = JSON.stringify(inMessage);
+				2.方式二。data:{id，data，json}
+					url:"xxx?date=" + new Date().getTime();
+					data:{uid:uid,data:json}
+			-后端
+				1.方法一。使用数据对象接收
+					InMessage inMessage = objectMapper.readValue(json, InMessage.class);
+				2.方法二。使用Map接收
+					Map map = objectMapper.readValue(json, Map.class);
+					map.get(key);
 		OutMessage status data date
+			
 	2.index首页框架业务写完
 	3.页面跳转goPage拦截器写完
 	4.初步实现前端页面效果，剩下就是逐步开发剩余功能，数据交互和管理按总结结论进行。
+2016年4月15日
+	1.功能列表接口开发完毕，前后端数据交互格式统一。
+	2.jackson灵活创建json
+	3. 修改o_function表，添加o_quickuse表
 	

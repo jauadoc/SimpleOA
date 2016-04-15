@@ -70,16 +70,12 @@
 /*注释搜索索引 如下*/
 /*1.======================   -------为需要按注释修改或按业务修改的代码*/
 /*2.测试数据             --------------测试用的数据*/
-	var inMessage = new Object();
 	<%
 		int uid = -1;
 		if(pageUser!=null && pageUser!=new PageUser()){
 			uid = pageUser.getId();
 		}
 	%>
-	inMessage.id = <%=uid %>;
-	inMessage.data;
-	inMessage.date;
 	$().ready(function(){
 		/*获取左侧个人信息*/
 		getGlobalLeft();
@@ -91,27 +87,38 @@
 		$(".m-layer").removeClass("m-layer-show");
 	}
 	/* 显示弹窗，并请求功能数据 */
-	function showWindow(){
+	function addMoreQuickuse(){
 		$("#m-apply").addClass("m-layer-show");
+		var inMessage = new Object();
+		inMessage.date = new Date().getTime();
+		inMessage.data = "";
+		inMessage.uid = <%=uid %>;
+		var json = JSON.stringify(inMessage);
 		$.ajax({
-		   url: '/data/getFunction?date='+ new Date().getTime(),
-      	   type: 'get',
-		   data:{},
+		   url: '<%=path %>/data/getFunction.do?date='+ new Date().getTime(),
+      	   type: 'post',
+		   data:{data:json},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
       			/*$("#data").html(data);*/
-      			var data = {"functions":[{"name":"审批"},{"name":"审批"},{"name":"审批"},{"name":"审批"},{"name":"审批"}],"count":5};
+      			data = JSON.parse(data);
+//       			var data = {"functions":[{"name":"test","isChoose":"no"},{"name":"test1","isChoose":"no"},{"name":"test2","isChoose":"no"},{"name":"test3","isChoose":"no"},{"name":"test4","isChoose":"no"},{"name":"test41","isChoose":"no"},{"name":"test42","isChoose":"no"},{"name":"test421","isChoose":"no"}]};
       			var html = "";
-      			for(var i=0;i<data.count;i++){
-      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
+      			for(var i=0;i<data.functions.length;i++){
+      				if(data.functions[i].isChoose=="false" || data.functions[i].isChoose==false){
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
+      				}else{
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"' checked></input></div>";
+      				}
       			}
 				$(".functionWindow").html(html);
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
+      			alert("error");
 				var data = {"functions":[{"name":"审批","isChoose":"no"},{"name":"审批","isChoose":"no"},{"name":"外出","isChoose":"yes"},{"name":"离职","isChoose":"no"},{"name":"请假","isChoose":"yes"},],"count":5};
       			var html = "";
       			for(var i=0;i<data.count;i++){
@@ -131,22 +138,26 @@
 		});
 	}
 	/*提交添加的快捷连接*/
+	//inMessage：{"id":1,"date":1460705461999,"data":[{"func":"外出"},{"func":"请假"}]}
 	function subAddMore(){
 		/* 获取前端信息整合为json字符串 */
 		var jsonObj = new Object();
 		var inputs = $(".functionWindow").children("input");
-		inMessage.data = [];
+		var inMessage = new Object();
 		inMessage.date = new Date().getTime();
+		inMessage.data = [];
+		inMessage.id = <%=uid %>
+		jsonObj.func = "";
 		var mark = 0;
 		for(var i=0;i<inputs.length;i++){
 			if($(inputs[i]).is(':checked')){
+				jsonObj = new Object();
 				jsonObj.func = $(inputs[i]).val();
 				inMessage.data[mark] = jsonObj;
 				mark++;
 			}
 		}
 		var json = JSON.stringify(inMessage);
-		alert(json);
 		/* json发送到服务器 */
 		$.ajax({
 		   url: '/data/addQuickUse?date='+new Date().getTime(),
@@ -167,7 +178,8 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				$(dtitle).append(errorInfo); 
+				alert("数据请求异常");			
+				alert(json);	
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -180,6 +192,7 @@
 	
 	/* 2.页面目录转跳页面业务逻辑--------------------------------------- */
 	/*content转跳至xx页面函数*/
+	//goPage没有遵循inMessage格式，因为前后端都写完，暂且不改。
 	function goPage(pageUrl){
 		$.ajax({
 		   url: '<%=path%>/goPage.do?date='+new Date().getTime(),
@@ -210,28 +223,35 @@
 	/* 3.左侧个人信息获取业务逻辑------------------------------------------- */
 	/*获取 个人信息 -left*/
 	function getGlobalLeft(){
+		
+		var inMessage = new Object();
+		inMessage.date = new Date().getTime();
+		inMessage.data = "";
+		inMessage.uid = <%=uid %>;
+		var json = JSON.stringify(inMessage);
+		
 		$.ajax({
 		   url: '/data/info?date='+new Date().getTime(),
       	   type: 'get',
-		   data:{uid:'1'},
+		   data:json,
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
 				alert("success in left");
-      			/*{"head":"./head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"}*/
+      			/*{"status":"success","data":{"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};*/
       			/*测试数据*/
-      			var data = {"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
-      			$("#oa-head").html("<img src='"+data.head+"'/>");
-      			$("#oa-name").html(data.name);
-      			$("#oa-job").html(data.job);
+      			var data = {"status":"success","data":{"head":"./jics/images/head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};
+      			$("#oa-head").html("<img src='"+data.data.head+"'/>");
+      			$("#oa-name").html(data.data.name);
+      			$("#oa-job").html(data.data.job);
       			$("#oa-out").html("退出登录");
       			var quicksHtml = "";
-      			for(var i=0;i<data.length;i++){
-      				quicksHtml += "<a href='"+data.quickuse[i].href+"' class='quickuse'>"+data.quickuse[i].name+"</a>";
+      			for(var i=0;i<data.data.length;i++){
+      				quicksHtml += "<a href='"+data.data.quickuse[i].href+"' class='quickuse'>"+data.data.quickuse[i].name+"</a>";
       			}
-      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse' class='quickuse'>+添加更多常用功能+</a>";
+      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+添加更多常用功能+</a>";
       			$("#oa-u-use").html(quicksHtml);
 			},
 			//请求失败遇到异常触发
@@ -242,16 +262,16 @@
 
 
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"};
-      			$("#oa-head").html(data.head);
-      			$("#oa-name").html(data.name);
-      			$("#oa-job").html(data.job);
+      			var data = {"status":"success","data":{"head":"./jics/images/head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};
+      			$("#oa-head").html("<img src='"+data.data.head+"'/>");
+      			$("#oa-name").html(data.data.name);
+      			$("#oa-job").html(data.data.job);
       			$("#oa-out").html("退出登录");
       			var quicksHtml = "";
-      			for(var i=0;i<data.length;i++){
-      				quicksHtml += "<a href='"+data.quickuse[i].href+"' class='quickuse'>"+data.quickuse[i].name+"</a>";
+      			for(var i=0;i<data.data.length;i++){
+      				quicksHtml += "<a href='"+data.data.quickuse[i].href+"' class='quickuse'>"+data.data.quickuse[i].name+"</a>";
       			}
-      			quicksHtml +="<a href='javascript:void(0)' class='quickuse' onclick='showWindow()'>+添加更多常用功能+</a>";
+      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+添加更多常用功能+</a>";
       			$("#oa-u-use").html(quicksHtml);
 				/* 暂无接口实现，前端测试 =====================================*/
 			},
@@ -279,19 +299,24 @@
       		success: function (data) {
 				alert("success in system");
       			/*测试数据*/
-      		    var data = {"directory":[{"name":"首页","img":"3wb.com","href":"index"},{"name":"联系人","img":"3wb.com","href":"person"},{"name":"工作","img":"3wb.com","href":"work"},{"name":"消息","img":"3wb.com","href":"message"}],"count":4};
+
+				/* 暂无接口实现，前端测试 =====================================*/
+      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"./jics/images/home.png","href":"index"},{"name":"联系人","img":"./jics/images/friend.png","href":"person"},{"name":"工作","img":"./jics/images/work.png","href":"work"},{"name":"消息","img":"./jics/images/msg.png","href":"message"}],"logo":"./jics/images/logo.png"},"date":"3902392"};
       			/*从服务器获取首页目录信息*/
-      			var dirs = data.directory;
+      			var dirs = data.data.directory;
       			var dirHtml = "";
-      			for(var i=0;i<data.count;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.directory[i].href+"\")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
+      			for(var i=0;i<data.data.directory.length;i++){
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
+      			$(".logo").html("<img src='"+data.data.logo+"'/>");
       			/*获取目录信息后，调用goPage函数，让中间Content请求index首页数据*/
       			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
-      			goPage(data.directory[0].href);
-      			/*======================================================*/
+      			goPage(data.data.directory[0].href);
+				/* 暂无接口实现，前端测试 =====================================*/
+
+
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
@@ -299,18 +324,19 @@
 
 
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"directory":[{"name":"首页","img":"test","href":"index"},{"name":"联系人","img":"3wb.com","href":"person"},{"name":"工作","img":"3wb.com","href":"work"},{"name":"消息","img":"3wb.com","href":"message"}],"count":4};
+      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"./jics/images/home.png","href":"index"},{"name":"联系人","img":"./jics/images/friend.png","href":"person"},{"name":"工作","img":"./jics/images/work.png","href":"work"},{"name":"消息","img":"./jics/images/msg.png","href":"message"}],"logo":"./jics/images/logo.png"},"date":"3902392"};
       			/*从服务器获取首页目录信息*/
-      			var dirs = data.directory;
+      			var dirs = data.data.directory;
       			var dirHtml = "";
-      			for(var i=0;i<data.count;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.directory[i].href+"\")' class='dir check'><div><img src='"+data.directory[i].img+"'></div>"+data.directory[i].name+"</a>";
+      			for(var i=0;i<data.data.directory.length;i++){
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
+      			$(".logo").html("<img src='"+data.data.logo+"'/>");
       			/*获取目录信息后，调用goPage函数，让中间Content请求index首页数据*/
       			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
-      			goPage(data.directory[0].href);
+      			goPage(data.data.directory[0].href);
 				/* 暂无接口实现，前端测试 =====================================*/
 
 
@@ -335,7 +361,7 @@
 				<div class="head" id="oa-head">&nbsp</div>
 				<div class="job underHead" id="oa-job">&nbsp</div>
 				<div class="name underHead" id="oa-name">&nbsp</div>
-				<a href="javascript:void(0)" class="out underHead" id="oa-out">&nbsp</a>
+				<a href="<%=path %>/logout.do" class="out underHead" id="oa-out">&nbsp</a>
 			</div>
 			<div class="split"></div>
 			<div class="u-use" id="oa-u-use">

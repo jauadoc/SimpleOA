@@ -7,3 +7,7 @@ CREATE TABLE `oa`.`o_announcement` (
   `announcement_date` DATE NOT NULL COMMENT '发布日期',
   `is_show` INT NOT NULL COMMENT '是否显示',
   PRIMARY KEY (`id`));
+  
+  ALTER TABLE `oa`.`o_announcement` 
+ADD COLUMN `expiration` DATE NOT NULL AFTER `is_show`;
+

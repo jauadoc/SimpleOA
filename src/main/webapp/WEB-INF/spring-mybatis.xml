@@ -72,7 +72,7 @@
  
 	<!-- spring与mybatis整合配置，扫描所有dao -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-		<property name="basePackage" value="com.sun.dao" /> 
+		<property name="basePackage" value="com.sun.mappers" /> 
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 对数据源进行事务管理 -->
