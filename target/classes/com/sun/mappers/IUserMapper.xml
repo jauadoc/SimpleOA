@@ -10,6 +10,12 @@
 	</resultMap> 
   
     <select id="checkUser" parameterType="com.sun.entity.PageUser" resultMap="UserMap">
-       select id,uname,name,head,job from o_user where  uname=#{uname} and pwd=#{pwd}
+        select id,uname,name,head,job from oa.o_user where  uname=#{uname} and pwd=#{pwd}
+    </select>
+    <select id="getUser" parameterType="int" resultMap="UserMap">
+        select uname,name,head,job from oa.o_user where id=#{uid }
+    </select>
+    <select id="getJob" parameterType="int" resultType="String">
+        select name from oa.o_job where id=#{jid }
     </select>
 </mapper>

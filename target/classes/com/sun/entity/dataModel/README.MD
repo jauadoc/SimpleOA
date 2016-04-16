@@ -1,0 +1,1 @@
+该包下放的entity是非对应表，而又不需创建一个entity的通用entity。

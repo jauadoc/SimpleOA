@@ -15,5 +15,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <mappers>
   	  <mapper resource="com/sun/mappers/IUserMapper.xml"/>
   	  <mapper resource="com/sun/mappers/IDataMapper.xml"/>
+  	  <mapper resource="com/sun/mappers/IGlobalMapper.xml"/>
     </mappers>
 </configuration>

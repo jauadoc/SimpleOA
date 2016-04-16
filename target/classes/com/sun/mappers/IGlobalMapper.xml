@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.dao.IGlobal">
+       
+	<resultMap id="directory" type="com.sun.entity.data.Directory">      
+		<result property="name" column="name"/> 
+		<result property="img" column="img"/> 
+		<result property="href" column="href"/> 
+	</resultMap> 
+  
+    <select id="getSystem"  resultMap="directory">
+       select name,img,href from oa.o_directory a order by a.order;
+    </select>
+</mapper>

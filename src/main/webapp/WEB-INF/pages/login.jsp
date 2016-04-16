@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"<%=path%>/check.do",//默认是form action,
 						async: false,
-		                type: "GET",
+		                type: "POST",
 		                datatype: "json",
 						data:{
 							uname:uname,
@@ -103,6 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			});
 		});
+		
 </script>
 </head>
 <body>
@@ -114,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						用户名:
 					</div>
 					<div class="right">
-						<input type="text" class="u-ipt" id="uname" name="uname"></input>
+						<input type="text" class="u-ipt" id="uname" name="uname" placeholder="请输入用户名" value="sun"></input>
 					</div>
 				</div>
 				<div class="unit">
@@ -122,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						密码:
 					</div>
 					<div class="right">
-						<input type="password" class="u-ipt" id="pwd" name="pwd"></input>
+						<input type="password" class="u-ipt" id="pwd" name="pwd" placeholder="请输入密码" value="123"></input>
 					</div>
 				</div>
 				<div class="unit">

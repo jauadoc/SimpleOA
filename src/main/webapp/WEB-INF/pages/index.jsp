@@ -109,26 +109,16 @@
       			var html = "";
       			for(var i=0;i<data.functions.length;i++){
       				if(data.functions[i].isChoose=="false" || data.functions[i].isChoose==false){
-	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].fid+"'></input></div>";
       				}else{
-	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"' checked></input></div>";
+	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].fid+"' checked></input></div>";
       				}
       			}
 				$(".functionWindow").html(html);
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-      			alert("error");
-				var data = {"functions":[{"name":"审批","isChoose":"no"},{"name":"审批","isChoose":"no"},{"name":"外出","isChoose":"yes"},{"name":"离职","isChoose":"no"},{"name":"请假","isChoose":"yes"},],"count":5};
-      			var html = "";
-      			for(var i=0;i<data.count;i++){
-      				if(data.functions[i].isChoose=="no"){
-	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"'></input></div>";
-      				}else{
-	      				html += data.functions[i].name+"<input type='checkbox' value='"+data.functions[i].name+"' checked></input></div>";
-      				}
-      			}
-				$(".functionWindow").html(html);
+				alert("error");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -146,7 +136,7 @@
 		var inMessage = new Object();
 		inMessage.date = new Date().getTime();
 		inMessage.data = [];
-		inMessage.id = <%=uid %>
+		inMessage.uid = <%=uid %>
 		jsonObj.func = "";
 		var mark = 0;
 		for(var i=0;i<inputs.length;i++){
@@ -160,14 +150,15 @@
 		var json = JSON.stringify(inMessage);
 		/* json发送到服务器 */
 		$.ajax({
-		   url: '/data/addQuickUse?date='+new Date().getTime(),
+		   url: '<%=path %>/data/addQuickUse.do?date='+new Date().getTime(),
       	   type: 'post',
-		   data: json,
+		   data: {data:json},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
+      			data = JSON.parse(data);
       			if(data.status=="success"){
       				alert(data.data);
       				hiddenWindow();
@@ -179,7 +170,6 @@
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
 				alert("数据请求异常");			
-				alert(json);	
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -223,57 +213,33 @@
 	/* 3.左侧个人信息获取业务逻辑------------------------------------------- */
 	/*获取 个人信息 -left*/
 	function getGlobalLeft(){
-		
-		var inMessage = new Object();
-		inMessage.date = new Date().getTime();
-		inMessage.data = "";
-		inMessage.uid = <%=uid %>;
-		var json = JSON.stringify(inMessage);
-		
 		$.ajax({
-		   url: '/data/info?date='+new Date().getTime(),
+		   url: '<%=path %>/data/getUserInfo.do?date='+new Date().getTime(),
       	   type: 'get',
-		   data:json,
+		   data:{uid:<%=uid %>},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
-				alert("success in left");
-      			/*{"status":"success","data":{"head":"http://www.baidu.com/img/bd_logo1.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};*/
-      			/*测试数据*/
-      			var data = {"status":"success","data":{"head":"./jics/images/head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};
+      			data = JSON.parse(data);
+				/* 暂无接口实现，前端测试 =====================================*/
       			$("#oa-head").html("<img src='"+data.data.head+"'/>");
       			$("#oa-name").html(data.data.name);
       			$("#oa-job").html(data.data.job);
       			$("#oa-out").html("退出登录");
       			var quicksHtml = "";
-      			for(var i=0;i<data.data.length;i++){
-      				quicksHtml += "<a href='"+data.data.quickuse[i].href+"' class='quickuse'>"+data.data.quickuse[i].name+"</a>";
+      			for(var i=0;i<data.data.quickuse.length;i++){
+      				quicksHtml += "<a href='javascript:void(0)'  onclick='goPage(\""+data.data.quickuse[i].href+"\")'  class='quickuse'>"+data.data.quickuse[i].name+"</a>";
       			}
       			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+添加更多常用功能+</a>";
       			$("#oa-u-use").html(quicksHtml);
+				/* 暂无接口实现，前端测试 =====================================*/
+				
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				alert("error in left");
-// 				$("#oa-u-use").html("<div onclick='getGlobalLeft()' class='u-btn'>数据请求异常,重新获取</div>"); 
-
-
-
-				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"status":"success","data":{"head":"./jics/images/head.png","name":"张三","job":"java软件工程师","quickuse":[{"name":"工作簿","href":"www.baidu.com"},{"name":"联系人","href":"3wb.com"}],"length":"2"},"date":"3902392"};
-      			$("#oa-head").html("<img src='"+data.data.head+"'/>");
-      			$("#oa-name").html(data.data.name);
-      			$("#oa-job").html(data.data.job);
-      			$("#oa-out").html("退出登录");
-      			var quicksHtml = "";
-      			for(var i=0;i<data.data.length;i++){
-      				quicksHtml += "<a href='"+data.data.quickuse[i].href+"' class='quickuse'>"+data.data.quickuse[i].name+"</a>";
-      			}
-      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+添加更多常用功能+</a>";
-      			$("#oa-u-use").html(quicksHtml);
-				/* 暂无接口实现，前端测试 =====================================*/
+				
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -287,26 +253,22 @@
 	/* 4.系统信息获取业务逻辑-------------------------------------------------- */
 	/*获取 系统信息(系统名称，右侧目录信息)-right*/
 	function getGlobalSystem(){
-		/*{directory:[{name:'首页',img:'3wb.com',href:'/goPage?pageName=index'},{name:'联系人',img:'3wb.com',href:'/goPage?pageName=person},{name:'工作',img:'3wb.com',href:'/goPage?pageName=work},{name:'消息',img:'3wb.com',href:'/goPage?pageName=message}],count:4}*/
 		$.ajax({
-		   url: '/data/system?date='+new Date().getTime(),
-      	   type: 'get',
+		   url: '<%=path %>/data/getSystem.do?date='+new Date().getTime(),
+      	   type: 'post',
 		   data:{},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
-				alert("success in system");
-      			/*测试数据*/
-
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"./jics/images/home.png","href":"index"},{"name":"联系人","img":"./jics/images/friend.png","href":"person"},{"name":"工作","img":"./jics/images/work.png","href":"work"},{"name":"消息","img":"./jics/images/msg.png","href":"message"}],"logo":"./jics/images/logo.png"},"date":"3902392"};
+      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"jics/images/home.png","href":"index"},{"name":"联系人","img":"jics/images/friend.png","href":"friend"},{"name":"工作","img":"jics/images/work.png","href":"work"},{"name":"消息","img":"jics/images/msg.png","href":"message"}],"logo":"jics/images/logo.png"},"date":"3902392"};
       			/*从服务器获取首页目录信息*/
       			var dirs = data.data.directory;
       			var dirHtml = "";
       			for(var i=0;i<data.data.directory.length;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='<%=path%>/"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
@@ -315,32 +277,10 @@
       			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
       			goPage(data.data.directory[0].href);
 				/* 暂无接口实现，前端测试 =====================================*/
-
-
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				alert("error in system");
-
-
-				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"./jics/images/home.png","href":"index"},{"name":"联系人","img":"./jics/images/friend.png","href":"person"},{"name":"工作","img":"./jics/images/work.png","href":"work"},{"name":"消息","img":"./jics/images/msg.png","href":"message"}],"logo":"./jics/images/logo.png"},"date":"3902392"};
-      			/*从服务器获取首页目录信息*/
-      			var dirs = data.data.directory;
-      			var dirHtml = "";
-      			for(var i=0;i<data.data.directory.length;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
-      			}
-      			
-      			$("#oa-m-nav").html(dirHtml);
-      			$(".logo").html("<img src='"+data.data.logo+"'/>");
-      			/*获取目录信息后，调用goPage函数，让中间Content请求index首页数据*/
-      			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
-      			goPage(data.data.directory[0].href);
-				/* 暂无接口实现，前端测试 =====================================*/
-
-
-
+				alert("获取系统信息异常");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -375,25 +315,25 @@
 	<div class="g-head">
 		<div class="m-head">
 			<div class="sys-title">
-				<div class="logo"><img src="./logo.png"></div>
+				<div class="logo"><img src=""></div>
 				<div class="title">Simple-OA</div>
 			</div>
 			<div class="m-nav clearfix" id="oa-m-nav">
 				
 				<a href="javascript:void(0)" class="dir check">
-					<div><img src="./home.png"></div>
+					<div><img src=""></div>
 					首页
 				</a>
 				<a href="javascript:void(0)" class="dir">
-					<div><img src="./msg.png"></div>
+					<div><img src=""></div>
 					消息
 				</a>
 				<a href="javascript:void(0)" class="dir">
-					<div><img src="./work.png"></div>
+					<div><img src=""></div>
 					工作
 				</a>
 				<a href="javascript:void(0)" class="dir">
-					<div><img src="./firend.png"></div>
+					<div><img src=""></div>
 					联系人
 				</a>
 			</div>

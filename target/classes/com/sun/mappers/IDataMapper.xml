@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sun.dao.IData">
-       
+
+	<!-- 通用数据模型 -->    
+
+    
+  	<!-- 获取功能列表sql -->
 	<resultMap id="function" type="com.sun.entity.data.Function">      
+		<result property="id" column="id"/> 
 		<result property="name" column="name"/> 
-		<result property="isChoose" column="isChoose"/> 
+		<result property="href" column="href"/> 
 	</resultMap> 
-  
-    <select id="getFunction" parameterType="int" resultMap="function">
-       SELECT name,isChoose FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid };
+    
+    <select id="getFunction" resultMap="function">
+        SELECT id,name,href FROM oa.o_function;
     </select>
+    <select id="getChooseFunction" parameterType="int" resultType="java.lang.String">
+        SELECT name FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid };
+    </select>
+    <select id="getQuickUse" parameterType="int" resultMap="function">
+    	SELECT a.name,a.href FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=1
+    </select>
+    
+    
+    <!-- 添加快捷方式sql -->
+    <resultMap id="quickuses" type="com.sun.entity.dataModel.IntRelationship">      
+		<result property="p1" column="uid"/> 
+		<result property="p2" column="fid"/> 
+	</resultMap> 
+    
+    <delete id="deleteQuickUse" parameterType="int">
+    	DELETE FROM oa.o_quickuse WHERE uid=#{uid };
+    </delete>
+    <insert  id="addQuickUse" parameterType="java.util.List">
+  	    INSERT INTO oa.o_quickuse(uid,fid) VALUES
+		<foreach collection="list" item="quickuse" separator=",">
+			 (#{quickuse.p1},#{quickuse.p2})
+		</foreach>
+    </insert>
+    
+    
 </mapper>

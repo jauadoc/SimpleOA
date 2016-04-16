@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sun.dao.IUser;
 import com.sun.entity.OutMessage;
 import com.sun.entity.PageUser;
+import com.sun.service.GeneralService;
 import com.sun.utils.DateUtil;
 import com.sun.utils.MD5Util;
 import com.sun.utils.SafeUtil;
@@ -29,8 +30,6 @@ import com.sun.utils.StrUtil;
  */
 @Controller
 public class GeneralController extends BaseController{
-	private static String userRight = "登录成功,正在转跳首页...";
-	private static String userWrong = "用户名或密码错误";
 	
 	/**
 	 * 首页
@@ -71,34 +70,11 @@ public class GeneralController extends BaseController{
 		//获取前端用户名密码，验证用户名密码是否正确
 		String uname = (String)request.getParameter("uname");
 		String pwd = (String)request.getParameter("pwd");
-		ObjectMapper mapper = new ObjectMapper();
-		if(SafeUtil.checkUname(uname)){
-			String json = mapper.writeValueAsString(new OutMessage("error", userWrong, DateUtil.yyyyMMdd.format(new Date())));
-			response.getWriter().write(json);
-			return null;
+		if(uname==null || pwd==null){
+			return new ModelAndView("404");
 		}
-		if(StrUtil.notNull(pwd)){
-			pwd = MD5Util.md5(pwd);
-		}
-		SqlSession session = sqlSessionFactory.openSession();
-		IUser iUser = session.getMapper(IUser.class);
-		PageUser pageUser = new PageUser(0, uname, null, null, pwd, 0);
-		pageUser = iUser.checkUser(pageUser);
-//		密码不正确返回错误信息，正确返回正确信息并跳转页面
-		if(pageUser==null || pageUser==new PageUser()){
-			String json = mapper.writeValueAsString(new OutMessage("error", userWrong, DateUtil.yyyyMMdd.format(new Date())));
-			response.getWriter().write(json);
-			return null;
-		}
-		request.getSession().setAttribute("pageUser", pageUser);
-		String json = mapper.writeValueAsString(new OutMessage("success", userRight, DateUtil.yyyyMMdd.format(new Date())));
-		response.getWriter().write(json);
-//		-----------------------------------------------------------------------
-//		System.out.println(json);
-//		System.out.println("==========================");
-//		-----------------------------------------------------------------------
-		Map<String,Object> mv = new HashMap<String,Object>();
-		mv.put("pageUser", pageUser);
+		new GeneralService().checkUser(uname, pwd, sqlSessionFactory, request, response);
+
 		return null;
 	}
 	/**
@@ -107,14 +83,19 @@ public class GeneralController extends BaseController{
 	 */
 	@RequestMapping(value = "goPage.do")
 	public ModelAndView goPage(HttpServletRequest request,  HttpServletResponse response)throws Exception {
+		response.setCharacterEncoding("UTF-8");
+
 		String basePath = "content/";
 		String uid = request.getParameter("uid");
 		String pageUrl = basePath + request.getParameter("pageUrl");
+		if(uid==null || uid.equals("0")){
+			return new ModelAndView("404");
+		}
 		Map<String,Object> mv = new HashMap<String,Object>();
 		PageUser pageUser = new PageUser(Integer.parseInt(uid), null, null, null, null, 0);
 		mv.put("pageUser", pageUser);
+		
 		ModelAndView model = new ModelAndView(pageUrl,mv);
-		response.setCharacterEncoding("UTF-8");
 		return model;
 	}	
 	

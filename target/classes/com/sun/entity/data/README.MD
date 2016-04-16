@@ -1,0 +1,1 @@
+该包下放的entity都是对应一张表的entity
