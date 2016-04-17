@@ -1,10 +1,9 @@
 package com.sun.entity;
 
-public class InMessage {
+public class InMessage_group {
 	int uid;
 	String data;
 	String date;
-	String filed;
 	public int getUid() {
 		return uid;
 	}
@@ -23,28 +22,20 @@ public class InMessage {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getFiled() {
-		return filed;
-	}
-	public void setFiled(String filed) {
-		this.filed = filed;
-	}
 	@Override
 	public String toString() {
 		return "InMessage [uid=" + uid + ", data=" + data + ", date=" + date
-				+ ", filed=" + filed + "]";
+				+ "]";
 	}
-	public InMessage(int uid, String data, String date, String filed) {
+	public InMessage_group(int uid, String data, String date) {
 		super();
 		this.uid = uid;
 		this.data = data;
 		this.date = date;
-		this.filed = filed;
 	}
-	public InMessage() {
+	public InMessage_group() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 }

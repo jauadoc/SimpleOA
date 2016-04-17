@@ -16,7 +16,7 @@ import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sun.dao.IData;
-import com.sun.entity.InMessage;
+import com.sun.entity.InMessage_group;
 import com.sun.entity.OutMessage;
 import com.sun.entity.data.Function;
 import com.sun.entity.dataModel.IntRelationship;
@@ -79,18 +79,20 @@ public class QuickUseService {
 	public void getFunction(String json,SqlSessionFactory sqlSessionFactory,HttpServletResponse response) throws  IOException{
 		//获取前端传来json，将json处理成Map<fid,uid>进行数据库查询
 		ObjectMapper objectMapper = new ObjectMapper();
-		InMessage inMessage = objectMapper.readValue(json, InMessage.class);
+		InMessage_group inMessage = objectMapper.readValue(json, InMessage_group.class);
 		int uid = inMessage.getUid();
 
 		//数据库查询功能列表数据
-		IData iData = sqlSessionFactory.openSession().getMapper(IData.class);
+		SqlSession session = sqlSessionFactory.openSession();
+		IData iData = session.getMapper(IData.class);
 		List<Function> functions = iData.getFunction(uid);
 		List<String> chooseFunctions = iData.getChooseFunction(uid);
 		Map<String, Boolean> isChoose = new HashMap<String, Boolean>(); 
 		for(int i=0;i<chooseFunctions.size();i++){
 			isChoose.put(chooseFunctions.get(i), true);
 		}
-			
+		session.close();
+		
 		//动态拼接返回json数据。并通过jsonGenerator的构造方法设定输出流。
 		JsonGenerator jsonGenerator= JsonUtil.getJsonGenerator(response.getOutputStream());
 		try {

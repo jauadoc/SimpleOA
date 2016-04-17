@@ -24,7 +24,7 @@
 
 
 <style type="text/css">
-	#body{background-color:#efefef}#CalendarMain{width:680px;height:460px;border:1px solid #ccc;margin-top:10px;margin-left:10px}#title{width:100%;height:30px;background-color:#b9121b}.selectBtn{font-weight:900;font-size:15px;color:#fff;cursor:pointer;text-decoration:none;padding:7px 10px 6px 10px}.selectBtn:hover{background-color:#1d953f}.selectYear{float:left;margin-left:50px;position:absolute}.selectMonth{float:left;margin-left:120px;position:absolute}.month{float:left;position:absolute}.nextMonth{float:right}.currentDay{float:right}#context{background-color:#fff;width:100%}.week{width:100%;height:30px}.week>h3{float:left;color:#808080;text-align:center;margin:0;padding:0;margin-top:5px;font-size:16px}.dayItem{float:left}.lastItem a{color:#d1c7b7!important;}.item{color:#333;float:left;text-align:center;cursor:pointer;margin:0;font-family:"微软雅黑";font-size:13px}.item:hover{color:#b9121b}.currentItem>a{background-color:#b9121b;width:25px;line-height:25px;float:left;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;color:#fff}#foots{width:100%;height:35px;background-color:#fff;border-top:1px solid #ccc;margin-top:-1px}#footNow{float:left;margin:6px 0 0 5px;color:#009ad6;font-family:"微软雅黑"}#Container{overflow:hidden;float:left}#center{width:100%;overflow:hidden}#centerMain{width:300%;margin-left:-100%}#selectYearDiv{float:left;background-color:#fff}#selectYearDiv>div{float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer;color:#909090}.currentYearSd,.currentMontSd{color:#f40!important}#selectMonthDiv{float:left;background-color:#fff}#selectMonthDiv>div{color:#909090;float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer}#selectYearDiv>div:hover,#selectMonthDiv>div:hover{background-color:#efefef}#centerCalendarMain{float:left}
+	#body{background-color:#efefef}#CalendarMain{width:85%;height:460px;border:1px solid #ccc;margin-top:10px;margin-left:10px}#title{width:100%;height:30px;background-color:#b9121b}.selectBtn{font-weight:900;font-size:15px;color:#fff;cursor:pointer;text-decoration:none;padding:7px 10px 6px 10px}.selectBtn:hover{background-color:#1d953f}.selectYear{float:left;margin-left:50px;position:absolute}.selectMonth{float:left;margin-left:120px;position:absolute}.month{float:left;position:absolute}.nextMonth{float:right}.currentDay{float:right}#context{background-color:#fff;width:100%}.week{width:100%;height:30px}.week>h3{float:left;color:#808080;text-align:center;margin:0;padding:0;margin-top:5px;font-size:16px}.dayItem{float:left}.lastItem a{color:#d1c7b7!important;}.item{color:#333;float:left;text-align:center;cursor:pointer;margin:0;font-family:"微软雅黑";font-size:13px}.item:hover{color:#b9121b}.currentItem>a{background-color:#b9121b;width:25px;line-height:25px;float:left;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;color:#fff}#foots{width:100%;height:35px;background-color:#fff;border-top:1px solid #ccc;margin-top:-1px}#footNow{float:left;margin:6px 0 0 5px;color:#009ad6;font-family:"微软雅黑"}#Container{overflow:hidden;float:left}#center{width:100%;overflow:hidden}#centerMain{width:300%;margin-left:-100%}#selectYearDiv{float:left;background-color:#fff}#selectYearDiv>div{float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer;color:#909090}.currentYearSd,.currentMontSd{color:#f40!important}#selectMonthDiv{float:left;background-color:#fff}#selectMonthDiv>div{color:#909090;float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer}#selectYearDiv>div:hover,#selectMonthDiv>div:hover{background-color:#efefef}#centerCalendarMain{float:left}
 	.onwork{background:url(<%=path%>/jics/images/right.png) no-repeat}
 	.workdays{float:right}
 	.m-layer{}
@@ -75,8 +75,9 @@
 						<a id="footNow">00:00:00</a>
 					</div>
 					<!-- 工作统计 -->
-					<div id="workdays">&nbsp本月已工作：</div>
-					<div id="restdays">&nbsp本月请假共计：</div>
+					<div id="workdays">&nbsp本月已工作：<span></span></div>
+					<div id="restdays">&nbsp本月请假共计：<span></span></div>
+					<div id="absentdays">&nbsp本月旷工共计：<span></span></div>
 				</div>
 			</div>
 
@@ -87,16 +88,16 @@
 		<div class="split"></div>
 		<div class="notice-announcement">
 			<div class="annoucement notice clearfix">
-				--2016年4月2日
-				<div>各位员工好</div>
+				--&nbsp 
+				<div>&nbsp</div>
 			</div>
 		</div>
 		新闻
 		<div class="split"></div>
 		<div class="notice-new">
 			<div class="news notice clearfix">
-				--2016年4月2日
-				<div>今天天气不错</div>
+				--&nbsp
+				<div>&nbsp</div>
 			</div>
 		</div>
 	</div>
@@ -149,41 +150,29 @@
 <script type="text/javascript">
 	/* 显示今日细节 */
 	function showDetail(node) {
-		var currDay = $(node).children("a").html();
+		var oa_currDay = $(node).children("a").html();
+		var oa_currMonth = $(".selectMonth").html().substring(0,$(".selectMonth").html().length-1);
+		var oa_currYear = $(".selectYear").html().substring(0,$(".selectYear").html().length-1);
+		var oa_date = oa_currYear+"-"+oa_currMonth+"-"+oa_currDay;
 		$(".data-calendar").html("<div>安排：</div>");
-		$(".data-mission").html("<div>安排：</div>");
-		var inMessage = new Object();
-		inMessage.date = new Date().getTime();
-		inMessage.data = currDay;
-		inMessage.id = <%=uid %>
-		alert(JSON.stringify(inMessage));
+		$(".data-mission").html("<div>任务：</div>");
+		var inMessage_group = new Object();
+		inMessage_group.date = new Date().getTime();
+		inMessage_group.data = oa_date;
+		inMessage_group.uid = <%=uid %>
+		var json = JSON.stringify(inMessage_group);
+		var url = '/m_index/getToday.do?date=' + new Date().getTime();
 		//请求任务和安排数据
 		$.ajax({
-		   url: '/data/getMission?date='+ new Date().getTime(),
-      	   type: 'get',
-		   data:{uid:<%=uid %>},
+		   url: '<%=path %>'+url,
+      	   type: 'post',
+		   data:{data:json},
 		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   //调小超时时间会引起异常
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
-      			var data = {"status":"success","data":[{"content":"r1","kind":"calendar"},{"content":"r2","kind":"calendar"},{"content":"m1","kind":"mission"},{"content":"m2","kind":"mission"}],"date":"12312312"};
-				if(data.status=="success"){
-					for(var i=0;i<data.data.length;i++){
-						if(data.data[i].kind=="calendar"){
-							$(".data-calendar").append("<div class='one-mission'>"+data.data.content+"</div>");
-						}else if(data.data[i].kind=="mission"){
-						
-							$(".data-mission").append("<div class='one-mission'>"+data.data.content+"</div>");
-						}
-					}
-				}else{
-					alert("error");
-				}
-			},
-			//请求失败遇到异常触发
-			error: function (xhr, errorInfo, ex) {
-      			var data = {"status":"success","data":[{"content":"r1","kind":"calendar"},{"content":"r2","kind":"calendar"},{"content":"m1","kind":"mission"},{"content":"m2","kind":"mission"}],"date":"12312312"};
+      			data = JSON.parse(data);
 				if(data.status=="success"){
 					for(var i=0;i<data.data.length;i++){
 						if(data.data[i].kind=="calendar"){
@@ -196,7 +185,10 @@
 				}else{
 					alert("error");
 				}
-				
+			},
+			//请求失败遇到异常触发
+			error: function (xhr, errorInfo, ex) { 
+				alert("error");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -211,32 +203,35 @@
 	});
 	
 	function getAnnouncement(){
+		var url = '/m_index/getAnnouncement.do?date='+ new Date().getTime();
+		//请求考勤数据
 		$.ajax({
-		   url: '/data/getAnnouncement?date='+ new Date().getTime(),
-      	   type: 'get',
-		   data:{uid:<%=uid %>},
-		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-		   //调小超时时间会引起异常
-		   timeout: 3000,
+		    url: '<%=path %>'+url,
+      	    type: 'get',
+		    data:{uid:<%=uid %>},
+		    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		    //调小超时时间会引起异常
+		    timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
-      		
-      			var data = {"status":"success","data":[{"kind":"new","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"公司"},{"kind":"announcement","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"公司"},{"kind":"announcement","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"部门"}],"date":"12312312"};
-      			$(".notice-new").html("<div class='news notice clearfix'><div>--2016年4月2日<span class='float-right'>公司</span></div><div>今天天气不错</div></div>");
-			},
-			//请求失败遇到异常触发
-			error: function (xhr, errorInfo, ex) {
-			 		
-				var data = {"status":"success","data":[{"kind":"new","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"公司"},{"kind":"announcement","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"公司"},{"kind":"announcement","title":"今天不错","content":"真不错！！","date":"2016-1-11","department":"部门"}],"date":"12312312"};
+      			data = JSON.parse(data);			
 				var notices = data.data;
+				var newHtml = "";
+				var announcementHtml = "";
 				for(var i=0;i<notices.length;i++){
 					if(notices[i].kind=="new"){
-		      			$(".notice-new").append("<div class='news notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div>");
+		      			newHtml += "<a href='"+notices[i].href+"'><div class='news notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
 					}
 					if(notices[i].kind=="announcement"){
-		      			$(".notice-announcement").append("<div class='announcement notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div>");
+		      			announcementHtml += "<a href='"+notices[i].href+"'><div class='announcement notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
 					}
 				}
+				$(".notice-new").html(newHtml);
+				$(".notice-announcement").html(announcementHtml);
+			},
+			//请求失败遇到异常触发
+			error: function (xhr, errorInfo, ex) { 
+				alert("数据请求异常");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -472,52 +467,93 @@
 			//考勤信息，这里ajax请求考勤表，然后获取当月考勤信息，写入前端。
 			//ajax请求本月上班日期，以及本月工作多少日。用于统计。
 //=========================================================================================
-			$.ajax({
-				   url: '/data/getAttendance?date='+ new Date().getTime(),
-		      	   type: 'get',
-				   data:{uid:<%=uid%>,data:4},
-				   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				   //调小超时时间会引起异常
-				   timeout: 3000,
-		      		//请求成功后触发
-		      		success: function (data) {
-		      			var data = {"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
-						var worked = data.data[0].workday;
-						var workday = worked.split(",");
-						var nowDaysNub = data.data[0].nowDaysNub;
-						var days = $(".currMon");
-						for(var i=0;i<days.length;i++){
-							var day = $(days[i]).children("a").html();
-							for(var j=0;j<workday.length;j++){
-								if(workday[j]==i){
-									$(days[i]).addClass("onwork");
-								}
-							}
+			var inMessage_group = new Object();
+			inMessage_group.date = new Date().getTime();
+			inMessage_group.data = nowYear+"-"+nowMonth+"-"+nowDaysNub;
+			inMessage_group.uid = <%=uid %>
+			var json = JSON.stringify(inMessage_group);
+			var url = '/m_index/getAttendance.do?date='+ new Date().getTime();
+		//请求考勤数据
+		$.ajax({
+		   url: '<%=path %>'+url,
+      	   type: 'get',
+		   data:{data:json},
+		   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		   //调小超时时间会引起异常
+		   timeout: 3000,
+      		//请求成功后触发
+      		success: function (data) {
+      			data = JSON.parse(data);			
+				var workday =data.data.workday;
+				if(workday.indexOf(",")>0){
+					workday = data.data.workday.split(",");
+					$("#workdays span").html(workday.length+"日");
+				}else{
+					workday = data.data.workday;
+					if(workday==""){
+						$("#workdays span").html("0日");
+					}else{
+						$("#workdays span").html("1日");
+					}
+				}
+				
+				var restday = data.data.restday;
+				if(restday.indexOf(",")>0){
+					restday = data.data.restday.split(",");
+					$("#restdays span").html(restday.length+"日");
+				}else{
+					restday = data.data.restday;
+					if(restday==""){
+						$("#restdays span").html("0日");
+					}else{
+						$("#restdays span").html("1日");
+					}
+				}
+				var absentday = data.data.absentday;
+				if(absentday.indexOf(",")>0){
+					absentday = data.data.absentday.split(",");
+					$("#absentdays span").html(absentday.length+"日");
+				}else{
+					absentday = data.data.absentday;
+					if(absentday==""){
+						$("#absentdays span").html("0日");
+					}else{
+						$("#absentdays span").html("1日");
+					}
+				}
+				
+				var days = $(".currMon");//1,2,3,4,5,6,7,8
+				for(var i=0;i<days.length;i++){
+					var day = $(days[i]).children("a").html();
+					if(day.length==1){
+						day = "0" + day;
+					}
+					for(var j=0;j<workday.length;j++){
+						if(workday[j]==day){
+							$(days[i]).addClass("onwork");
 						}
-					},
-					//请求失败遇到异常触发
-					//{"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
-					error: function (xhr, errorInfo, ex) { 
-						var data = {"status":"success","data":[{"nowDaysNub":30,"workday":"1,2,5,11,23,22,17,30"}],"date":"12312312"};
-						var worked = data.data[0].workday;
-						var workday = worked.split(",");
-						var nowDaysNub = data.data[0].nowDaysNub;
-						var days = $(".currMon");
-						for(var i=0;i<days.length;i++){
-							var day = $(days[i]).children("a").html();
-							for(var j=0;j<workday.length;j++){
-								if(workday[j]==i){
-									$(days[i]).addClass("onwork");
-								}
-							}
+					}
+					for(var k=0;k<restday.length;k++){
+						if(restday==day || restday[k]==day){
+							$(days[i]).addClass("onrest");
 						}
-					},
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
-					},
-					//是否异步发送
-					async: true
-				});
+					}							
+					for(var m=0;m<absentday.length;m++){
+						if(absentday==day || absentday[m]==day){
+							$(days[i]).addClass("onabsent");
+						}
+					}
+				}
+			},
+			//请求失败遇到异常触发
+			error: function (xhr, errorInfo, ex) { 
+			},
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+			},
+			//是否异步发送
+			async: true
+		});
 //=========================================================================================
 			//生成当月的日期
 			for ( var i = 0; i < nowDaysNub; i++) {

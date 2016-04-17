@@ -45,6 +45,8 @@ public class GeneralService {
 		IUser iUser = session.getMapper(IUser.class);
 		PageUser pageUser = new PageUser(0, uname, null, null, pwd, 0);
 		pageUser = iUser.checkUser(pageUser);
+		session.close();
+		
 	//	密码不正确返回错误信息，正确返回正确信息并跳转页面
 		if(pageUser==null || pageUser==new PageUser()){
 			String json = mapper.writeValueAsString(new OutMessage("error", userWrong, DateUtil.yyyyMMdd.format(new Date())));

@@ -25,8 +25,8 @@ import com.sun.utils.SafeUtil;
 import com.sun.utils.StrUtil;
 /**
  * 
- * @author javadoc
  * 首页及基本控制器
+ * @author javadoc
  */
 @Controller
 public class GeneralController extends BaseController{
@@ -39,15 +39,6 @@ public class GeneralController extends BaseController{
 	@RequestMapping(value = "index.do")
 	public ModelAndView index_jsp(HttpServletRequest request,  HttpServletResponse response)throws Exception {
 		ModelAndView model = new ModelAndView("index");
-		return model;
-	}
-	/**
-	 * 测试Mybatis
-	 * 
-	 */
-	@RequestMapping(value = "test.do")
-	public ModelAndView test_jsp(HttpServletRequest request,  HttpServletResponse response)throws Exception {
-		ModelAndView model = new ModelAndView("test");
 		return model;
 	}
 	/**

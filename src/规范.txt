@@ -1,0 +1,29 @@
+1.前后端json格式
+	1.前端提交 
+		1.inMessage 
+			uid,data,data,filed（单表数据请求InMessage对象，单表数据前端可以控制需要的字段）
+			uid,data,data（多表数据综合请求InMessage对象）
+		如果查询的数据为对应某张表的数据，则需要填写filed来让服务器返回对应filed的数据对象
+	2.后端返回参数 outMessage status,data,date
+		{
+			status:success,
+			data:{xx:{},oo:{}},
+			date:2014
+		}
+2.后端数据模型
+	1.model
+		1.每张表对应一个model，存于entitiy.data
+	2.service
+		1.布局中content的显示模块，每个模块对应一个service	如M_IndexService，即index模块的service，该功能则在该service中实现
+	3.controller
+		1.每个模块有一个controller
+			GeneralController	--基础功能控制器  如登录，退出，转跳等
+			BaseController 		--控制器基类
+			GlobalController	--布局请求控制器
+			M_xx_Controller		--xx模块控制器
+	4.mapper
+		1.每个模块对应一个mapper
+3.请求地址
+	1./data/xx.do		--布局数据请求
+	2./m_index/xx.do		--index模块数据请求
+4.一个页面或模块的请求数控制为5个以内。

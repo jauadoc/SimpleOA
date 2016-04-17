@@ -14,7 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.sun.dao.IData;
 import com.sun.dao.IGlobal;
 import com.sun.dao.IUser;
-import com.sun.entity.InMessage;
+import com.sun.entity.InMessage_group;
 import com.sun.entity.PageUser;
 import com.sun.entity.data.Directory;
 import com.sun.entity.data.Function;
@@ -32,9 +32,12 @@ public class GlobalService {
 	 */
 	public void getSystem(String json,SqlSessionFactory sqlSessionFactory,HttpServletResponse response) throws  IOException{
 		//查询目录信息
-		IGlobal iGlobal = sqlSessionFactory.openSession().getMapper(IGlobal.class);
+		SqlSession session = sqlSessionFactory.openSession();
+		IGlobal iGlobal = session.getMapper(IGlobal.class);
 		List<Directory> direcotrys = iGlobal.getSystem();
-	
+		session.close();
+		
+		
 		//动态拼接返回json数据。并通过jsonGenerator的构造方法设定输出流。
 		JsonGenerator jsonGenerator= JsonUtil.getJsonGenerator(response.getOutputStream());
         try {
@@ -84,7 +87,7 @@ public class GlobalService {
 		PageUser pageUser = iUser.getUser(uid);
 		String job = iUser.getJob(pageUser.getJid());
 		List<Function> functions = iData.getQuickUse(uid);
-		
+		session.close();
 		
 		//将数据以交互格式返回
 		//动态拼接返回json数据。并通过jsonGenerator的构造方法设定输出流。

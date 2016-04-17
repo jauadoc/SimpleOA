@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <style>
 	body{background: url(<%=path%>/jics/images/bg.png);font-size: 14px;}
-	.login{width: 600px;height: 300px;background: rgba(49,59,54,0.8);margin: 0 auto;margin-top:120px;border-radius:15px;}
+	.login{width: 600px;height: 300px;background: rgba(49,59,54,0.8);margin: 0 auto;margin-top:10%;border-radius:15px;}
 	.content{position: relative;top: 30%;}
 	.unit{width: 80%;margin: 10px auto;}
 	.left,.right{display: inline-block;width: 46%;height: 20px;color: white;}

@@ -41,4 +41,7 @@
 	2.jackson灵活创建json
 	3. 修改o_function表，添加o_quickuse表
 
+2016年4月16日
+	1.布局接口完成
+2016年4月17日 
 	
