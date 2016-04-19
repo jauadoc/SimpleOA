@@ -1,6 +1,7 @@
 package com.sun.dao;
 
 import com.sun.entity.PageUser;
+import com.sun.entity.data.Job;
 
 public interface IUser {
 	/**
@@ -21,4 +22,10 @@ public interface IUser {
 	 * @return
 	 */
 	public String getJob(int jid);
+	
+	/**
+	 * 根据jid返回job
+	 * @return
+	 */
+	public Job getJobObj(int jid);
 }

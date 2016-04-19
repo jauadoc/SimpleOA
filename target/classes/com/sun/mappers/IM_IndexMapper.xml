@@ -49,21 +49,21 @@
     
     
     <select id="getMission" parameterType="com.sun.entity.dataModel.MoreRelationship" resultMap="mission">
-        SELECT id,name,description,executor,publisher,start_date,end_date,is_end,is_overdate,is_delay from oa.o_mission where executor=#{intParam1 } and is_end=102 and start_date<![CDATA[<=]]>#{dateParam1 } and end_date<![CDATA[>=]]>#{dateParam1 }
+        SELECT id,name,description,executor,publisher,start_date,end_date,is_end,is_overdate,is_delay from oa.o_mission where executor=#{intParam1 } and is_end=102 and start_date<![CDATA[<=]]>#{dateParam1 } and end_date<![CDATA[>=]]>#{dateParam1 } order by start_date
     </select>
     <select id="getCalendar" parameterType="com.sun.entity.dataModel.MoreRelationship" resultMap="calendar">
-        SELECT id,calender_date,matter,uid from oa.o_calendar where calender_date=#{dateParam1 } and uid=#{intParam1 }
+        SELECT id,calender_date,matter,uid from oa.o_calendar where calender_date=#{dateParam1 } and uid=#{intParam1 } 
     </select>
 	<select id="getAttendance" parameterType="com.sun.entity.dataModel.MoreRelationship" resultMap="attendance">
 		SELECT id,uid,attendance_date,is_absent,is_compensated,is_rest,work_end,work_start,work_time from oa.o_attendance
 		<where>
-			uid=#{intParam1 } and attendance_date<![CDATA[>=]]>#{dateParam1 } and attendance_date<![CDATA[<=]]>#{dateParam2 }
+			uid=#{intParam1 } and attendance_date<![CDATA[>=]]>#{dateParam1 } and attendance_date<![CDATA[<=]]>#{dateParam2 } order by attendance_date
 		</where>
 	</select>
 	<select id="getAnnouncement" parameterType="int" resultMap="announcement">
 		SELECT id,name,content,kind,did,announcement_date,is_show,expiration,href from oa.o_announcement 
 		<where>
-			(did=#{did } or did=1100) and is_show=101;
+			(did=#{did } or did=1100) and is_show=101 order by announcement_date
 		</where>
 	</select>
     <select id="getDepartment" parameterType="int" resultType="int">

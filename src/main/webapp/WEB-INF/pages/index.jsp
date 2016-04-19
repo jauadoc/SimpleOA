@@ -25,31 +25,33 @@
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/ie-plugin.css">
 	<![endif]-->
-	<title>数据管理系统</title>
+	<title>Simple-OA</title>
 
 <style>
 	/*功能样式*/
 	.clearfix:after{content: ".";display: block;clear: both;overflow: hidden;display: visibility:hidden;height: 0;display: none}
 	.clearfix{zoom:1;}
+	.hidden{display: none;visibility: hidden;}
 
 	/*通用样式*/
-	.split{border-bottom: 3px solid #0FDBD6;height:8px;content: ".";overflow: hidden;color: white;}
+	.split{border-bottom: 3px solid #0085B5;height:8px;content: ".";overflow: hidden;color: white;}
 	.float-right{float: right;}
 	.float-left{float: left;}
 	/*布局样式*/
 	html,body,.g-body{height: 100%;overflow: hidden;}
-	.g-left{position: absolute;left: 0px;top:60px;bottom:30px;border-right: #666 solid 1px;width: 200px;background: #313B36;}
-	.g-head{position: absolute;left:0px;top:0px;width: 100%; height:60px;border-bottom: #666 solid 1px;background: #0DAAA5;}
-	.g-content{position: absolute;left: 200px;top: 60px;right: 0px;bottom: 30px;}
-	.g-footer{position: absolute;left: 0px;bottom: 0px;border-top: #666 solid 1px;width: 100%;height: 30px;}
-
+	.g-head{position: absolute;left:0px;top:0px;width: 100%; height:60px;border-bottom: #666 solid 1px;background: #58ACED;}
+	.g-left{position: absolute;left: 0px;top:60px;bottom:30px;border-right: #666 solid 1px;width: 200px;z-index:999;background: #313B36;}
+	.g-content{position: absolute;left: 200px;top: 60px;right: 0px;bottom: 30px;background: #C0DEED;}
+	.g-footer{position: absolute;left: 0px;bottom: 0px;border-top: #666 solid 1px;width: 100%;height: 30px;background: #242525;}
+	.g-contentNoLeft{position: absolute;left: 0px;top: 60px;right: 0px;bottom: 30px;background: #C0DEED;}
+	
 	/*头模块样式*/
 	.m-head{width: 100%;height: 60px;display: table;vertical-align: top;}
 	.m-head .sys-title{width:60%;height: 60px;line-height: 60px;font-size: 36px;margin-left: 20px;display: table-cell;}
 	.m-head .sys-title .logo,.m-head .sys-title .title{display: inline-block;}
-	.m-head .m-nav{display: table-cell;height: 60px;}
-	.m-head .m-nav .dir{display: table-cell;border-top: solid #CBA 1px;border-left: solid #CBA 1px;border-right: solid #CBA 1px;width: 120px;color: #FFF;height: 60px;text-align: center;}
-	.m-head .m-nav .check{background: #0A7E7C;}
+	.m-head .m-nav{display: table-cell;height: 54px;font-size:9px;}
+	.m-head .m-nav .dir{display: table-cell;border-top: solid #CBA 1px;border-left: solid #CBA 1px;border-right: solid #CBA 1px;width: 120px;color: #FFF;height: 54px;text-align: center;}
+	.check{background: #0085B5;}
 
 	/*左模块样式*/
 	.m-instro .u-info .head{border-radius:100%;width: 100px;height:100px;margin: 2% auto;border: solid 3px #DDD;overflow: hidden;}
@@ -57,14 +59,28 @@
 	.m-instro .u-info .job{width: 60%;margin: 2% auto;border: solid 1px #666;overflow: hidden;text-align: center;color:#CCC;display: block;font-size: 16px;line-height: 16px;}
 	.m-instro .u-use .quickuse{border-bottom:solid 1px #555;margin-top: 2px;display: block;color:#CCC;}
 	.m-instro .u-use{width:100%;margin:15px auto;font-size: 12px;line-height: 12px;text-align: center;}
-	.oneSelect{display:inline-block;margin:2px 2px;}
+	.m-instro .oneSelect{display:inline-block;margin:2px 2px;}
 	.m-layer{}
+	.m-instro .hiddenLeft{position: absolute;top:50%;left:180px;color:white;border:solid 3px #DDD;float:right;font-size:20px;}
+	.left-open{position: absolute;top:50%;left:-10px;color:#333;border:solid 3px #333;float:right;font-size:20px;z-index:998;}
 	/*右模块样式*/
-	.g-content{background: #F1F1F1;display: table-cell;vertical-align: middle;}
-	.g-content .data{width: 100%;height: 98%;margin-left: 3px;margin-top: 5px;margin-bottom: 1%;overflow: auto;background: white;}
+	.g-content{display: table-cell;vertical-align: middle;}
+	.g-content .data{width: 100%;height: 98%;margin-left: 3px;margin-top: 5px;margin-bottom: 1%;overflow: auto;background: #C0DEED;}
 	
 	/*底模块样式*/
-	.g-footer{background: #242525;color: white;text-align: center;}
+	.g-footer{color: white;text-align: center;}
+	
+	/*  */
+	/* 提示信息框  */
+	.g-notice,.g-notice .lymask{top:0;left:0;width:100%;height:100%;}
+	.g-notice{position:fixed;_position:absolute;z-index:999;}
+	.g-notice .lytable{table-layout:fixed;width:100%;height:100%;}
+	.g-notice .lytd{width:100%;height:100%;vertical-align:middle;}
+	.g-notice .lywrap{position:relative;width:400px;margin:0 auto;background:white;height:30px;middle;text-align: center;vertical-align: middle;line-height: 30px;}
+	.g-notice-success{border:5px solid #49c43b;}
+	.g-notice-error{border:5px solid #EA4335;}
+	.g-notice-up{margin-top:-3px;}
+	.g-notice-down{margin-top:3px;}
 </style>
 <script type="text/javascript">
 /*注释搜索索引 如下*/
@@ -105,7 +121,6 @@
       		success: function (data) {
       			/*$("#data").html(data);*/
       			data = JSON.parse(data);
-//       			var data = {"functions":[{"name":"test","isChoose":"no"},{"name":"test1","isChoose":"no"},{"name":"test2","isChoose":"no"},{"name":"test3","isChoose":"no"},{"name":"test4","isChoose":"no"},{"name":"test41","isChoose":"no"},{"name":"test42","isChoose":"no"},{"name":"test421","isChoose":"no"}]};
       			var html = "";
       			for(var i=0;i<data.functions.length;i++){
       				if(data.functions[i].isChoose=="false" || data.functions[i].isChoose==false){
@@ -118,7 +133,7 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				alert("error");
+				showMsg("功能获取失败", "error");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -160,16 +175,16 @@
       		success: function (data) {
       			data = JSON.parse(data);
       			if(data.status=="success"){
-      				alert(data.data);
+					showMsg(data.data, "success");
       				hiddenWindow();
       			}else{
-      				alert(data.data);
+					showMsg(data.data, "error");
       			}
 				getGlobalLeft();
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				alert("数据请求异常");			
+				showMsg("快捷方式添加失败，请重新提交", "error");		
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -230,16 +245,15 @@
       			$("#oa-out").html("退出登录");
       			var quicksHtml = "";
       			for(var i=0;i<data.data.quickuse.length;i++){
-      				quicksHtml += "<a href='javascript:void(0)'  onclick='goPage(\""+data.data.quickuse[i].href+"\")'  class='quickuse'>"+data.data.quickuse[i].name+"</a>";
+      				quicksHtml += "<a href='javascript:void(0)'  onclick='goPage(\""+data.data.quickuse[i].href+"\")'  class='quickuse'><div onclick='chooseFunction()'>"+data.data.quickuse[i].name+"</div></a>";
       			}
-      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+添加更多常用功能+</a>";
+      			quicksHtml +="<a href='javascript:void(0)' onclick='addMoreQuickuse()' class='quickuse'>+常用功能管理+</a>";
       			$("#oa-u-use").html(quicksHtml);
 				/* 暂无接口实现，前端测试 =====================================*/
-				
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				
+				showMsg("个人信息获取失败", "error");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -262,25 +276,27 @@
 		   timeout: 3000,
       		//请求成功后触发
       		success: function (data) {
+      			data = JSON.parse(data);
 				/* 暂无接口实现，前端测试 =====================================*/
-      			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"jics/images/home.png","href":"index"},{"name":"联系人","img":"jics/images/friend.png","href":"friend"},{"name":"工作","img":"jics/images/work.png","href":"work"},{"name":"消息","img":"jics/images/msg.png","href":"message"}],"logo":"jics/images/logo.png"},"date":"3902392"};
+//       			var data = {"status":"success","data":{"directory":[{"name":"首页","img":"jics/images/home.png","href":"index"},{"name":"联系人","img":"jics/images/friend.png","href":"friend"},{"name":"工作","img":"jics/images/work.png","href":"work"},{"name":"消息","img":"jics/images/msg.png","href":"message"}],"logo":"jics/images/logo.png"},"date":"3902392"};
       			/*从服务器获取首页目录信息*/
       			var dirs = data.data.directory;
       			var dirHtml = "";
       			for(var i=0;i<data.data.directory.length;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir check'><div><img src='<%=path%>/"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
+      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir' data-href='"+data.data.directory[i].href+"'><div onclick='chooseThis(this)'><img src='<%=path%>/"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
-      			$(".logo").html("<img src='"+data.data.logo+"'/>");
+//       			$(".logo").html("<img src='"+data.data.logo+"'/>");
       			/*获取目录信息后，调用goPage函数，让中间Content请求index首页数据*/
       			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
+      			var nav_as = $("#oa-m-nav").children("a");
+				$(nav_as[0]).addClass("check");
       			goPage(data.data.directory[0].href);
-				/* 暂无接口实现，前端测试 =====================================*/
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				alert("获取系统信息异常");
+				showMsg("个人信息获取失败", "error");
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -288,13 +304,81 @@
 			//是否异步发送
 			async: true
 		});
+	}
 	/* end-4.系统信息获取业务逻辑-------------------------------------------------- */
+	function chooseThis(node){
+		var nav_as = $("#oa-m-nav").children("a");
+		for(var i=0;i<nav_as.length;i++){
+			$(nav_as[i]).removeClass("check");
+			
+		}
+		$(node).parent().addClass("check");
+	}
+	function chooseFunction(){
+		
+	}
+	function hiddenLeft(){
+		$(".g-left").addClass("hidden");
+		$(".g-content").addClass("g-contentNoLeft");
+		$(".g-contentNoLeft").removeClass("g-content");
+		$(".left-open").removeClass("hidden");
+	}
+	function showLeft(){
+		$(".g-left").removeClass("hidden");
+		$(".g-contentNoLeft").addClass("g-content");
+		$(".g-content").removeClass("g-contentNoLeft");
+		$(".left-open").addClass("hidden");
+	}
+	function showMsg(msg,status){
+	  		$(".g-notice").removeClass("hidden");
+		$("#g-notice-content").html(msg);
+		if(status=="success"){
+			$(".lywrap").removeClass("g-notice-error");
+			$(".lywrap").addClass("g-notice-success");
+		}
+		if(status=="error"){
+			$(".lywrap").removeClass("g-notice-success");
+			$(".lywrap").addClass("g-notice-error");
+		}
+		var i=0;
+	    var step =  function(){
+	    	if(i>64){
+	    		offAnimation();
+	    	}
+	    	if(i<12){
+	// 	    	上移
+		    	if(i%4==1){
+		    		$(".g-notice").removeClass("g-notice-down");
+		    		$(".g-notice").addClass("g-notice-up");
+		    	}
+	// 	    	中间
+		    	if(i%2==0){
+		    		$(".g-notice").removeClass("g-notice-up");
+		    		$(".g-notice").removeClass("g-notice-up");
+		    	}
+	// 	    	下移
+		    	if(i%4==3){
+		    		$(".g-notice").removeClass("g-notice-up");
+		    		$(".g-notice").addClass("g-notice-down");
+		    	}
+	    	}else{
+	    	
+	    	}
+	    	i++;
+	    }
+	    var offAnimation = function(){
+	  		clearInterval(intervalId);  
+	  		$(".g-notice").addClass("hidden");
+	    }
+	    //设置定时器，触发的间隔为10毫秒
+	    var intervalId = setInterval(step,30);
 	}
 </script>
 </head>
 <body>
 
 <div class="g-body">
+	<div class="left-open hidden" onclick="showLeft()">→</div>
 	<div class="g-left">
 		<div class="m-instro">
 			<div class="u-info">
@@ -310,13 +394,14 @@
 				<a href="javascript:void(0)" class="quickuse">&nbsp</a>
 				<a href="javascript:void(0)" class="quickuse">&nbsp</a>
 			</div>
+			<div class="hiddenLeft" onclick="hiddenLeft()">←</div>
 		</div>
 	</div>
 	<div class="g-head">
 		<div class="m-head">
 			<div class="sys-title">
-				<div class="logo"><img src=""></div>
-				<div class="title">Simple-OA</div>
+				<div class="logo"><img src="./jics/images/logo.png"></div>
+				<div class="title">专注，务实</div>
 			</div>
 			<div class="m-nav clearfix" id="oa-m-nav">
 				
@@ -372,5 +457,11 @@
 		京ICP证150335号/京公网安备11010802009977 Copyright © 2003-2016 MEISHIJ CO.,LTD.
 	</div>
 </div>
+<div class="g-notice hidden">
+    <table class="lytable"><tbody><tr><td class="lytd">
+    <div class="lywrap" id="g-notice-content">
+    </div></td></tr></tbody></table>
+</div>
+
 </body>
 </html>

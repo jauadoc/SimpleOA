@@ -1,28 +1,19 @@
 package com.sun.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sun.dao.IUser;
-import com.sun.entity.OutMessage;
 import com.sun.entity.PageUser;
 import com.sun.service.GeneralService;
-import com.sun.utils.DateUtil;
-import com.sun.utils.MD5Util;
-import com.sun.utils.SafeUtil;
-import com.sun.utils.StrUtil;
 /**
  * 
  * 首页及基本控制器

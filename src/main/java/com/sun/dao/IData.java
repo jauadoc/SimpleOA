@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.sun.entity.data.Function;
 import com.sun.entity.dataModel.IntRelationship;
+import com.sun.entity.dataModel.MoreRelationship;
 
 public interface IData {
 
 	/**
 	 * 获取功能名称列表
-	 * @param uid
+	 * @param uid_jid_auth
 	 * @return
 	 */
-	public List<Function> getFunction(int uid);
+	public List<Function> getFunction(MoreRelationship uid_jid_auth);
 	/**
 	 * 获取用户选择的快捷方式名称
 	 * @param uid

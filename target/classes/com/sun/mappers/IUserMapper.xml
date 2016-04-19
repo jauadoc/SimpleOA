@@ -8,7 +8,13 @@
 		<result property="head" column="head"/> 
 		<result property="jid" column="job"/> 
 	</resultMap> 
-  
+  	<resultMap id="job" type="com.sun.entity.data.Job" >
+  		<id property="id" column="id"></id>
+  		<result property="name" column="name"/>
+  		<result property="description" column="description"/>
+  		<result property="obey_department" column="obey_department"/>
+  		<result property="authorization" column="authorization"/>
+  	</resultMap>
     <select id="checkUser" parameterType="com.sun.entity.PageUser" resultMap="UserMap">
         select id,uname,name,head,job from oa.o_user where  uname=#{uname} and pwd=#{pwd}
     </select>
@@ -18,4 +24,8 @@
     <select id="getJob" parameterType="int" resultType="String">
         select name from oa.o_job where id=#{jid }
     </select>
+    <select id="getJobObj" parameterType="int" resultMap="job">
+        select id,name,description,obey_department,authorization from oa.o_job where id=#{jid }
+    </select>
+    
 </mapper>

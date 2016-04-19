@@ -16,10 +16,14 @@ import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sun.dao.IData;
+import com.sun.dao.IUser;
 import com.sun.entity.InMessage_group;
 import com.sun.entity.OutMessage;
+import com.sun.entity.PageUser;
 import com.sun.entity.data.Function;
+import com.sun.entity.data.Job;
 import com.sun.entity.dataModel.IntRelationship;
+import com.sun.entity.dataModel.MoreRelationship;
 import com.sun.utils.DateUtil;
 import com.sun.utils.JsonUtil;
 
@@ -56,7 +60,9 @@ public class QuickUseService {
 		IData iData = session.getMapper(IData.class);
 		try{
 			iData.deleteQuickUse(uid);
-			iData.addQuickUse(quickuses);
+			if(quickuses.size()>0){
+				iData.addQuickUse(quickuses);
+			}
 			session.commit();
 		}catch (Exception e) {
 			session.rollback();
@@ -84,8 +90,21 @@ public class QuickUseService {
 
 		//数据库查询功能列表数据
 		SqlSession session = sqlSessionFactory.openSession();
+		//根据uid查询用户的jid
+		IUser iUser = session.getMapper(IUser.class);
+		PageUser pageUser = iUser.getUser(uid);
+		int jid = pageUser.getJid();
+		//根据jid查询 所属部门，权限等级 (did auth)
+		Job job = iUser.getJobObj(jid);
+		int did = job.getObey_department();
+		int auth = job.getAuthorization();
+		//根据部门和权限查询自己能查询获取的function
+		MoreRelationship jid_auth = new MoreRelationship();
+		jid_auth.setIntParam1(did);
+		jid_auth.setIntParam2(auth);
+		
 		IData iData = session.getMapper(IData.class);
-		List<Function> functions = iData.getFunction(uid);
+		List<Function> functions = iData.getFunction(jid_auth);
 		List<String> chooseFunctions = iData.getChooseFunction(uid);
 		Map<String, Boolean> isChoose = new HashMap<String, Boolean>(); 
 		for(int i=0;i<chooseFunctions.size();i++){
@@ -108,6 +127,9 @@ public class QuickUseService {
 								jsonGenerator.writeObjectField("isChoose", "false");
 							}
 							jsonGenerator.writeObjectField("fid", functions.get(i).getId());
+							jsonGenerator.writeObjectField("icon", functions.get(i).getIcon());
+							jsonGenerator.writeObjectField("obey", functions.get(i).getObey());
+							jsonGenerator.writeObjectField("href", functions.get(i).getHref());
 						jsonGenerator.writeEndObject(); // }  
 					}
 		        jsonGenerator.writeEndArray();//]

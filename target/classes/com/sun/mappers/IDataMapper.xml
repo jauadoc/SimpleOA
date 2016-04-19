@@ -12,14 +12,17 @@
 		<result property="href" column="href"/> 
 	</resultMap> 
     
-    <select id="getFunction" resultMap="function">
-        SELECT id,name,href FROM oa.o_function;
+    <select id="getFunction" parameterType="com.sun.entity.dataModel.MoreRelationship" resultMap="function">
+        SELECT id,name,href,obey,icon,did,power FROM oa.o_function
+        <where>
+        	(did=#{intParam1 } or did=999999 ) and power<![CDATA[<=]]>#{intParam2 } order by obey
+        </where>
     </select>
     <select id="getChooseFunction" parameterType="int" resultType="java.lang.String">
-        SELECT name FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid };
+        SELECT name FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid } order by obey
     </select>
     <select id="getQuickUse" parameterType="int" resultMap="function">
-    	SELECT a.name,a.href FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=1
+    	SELECT a.name,a.href FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=1 order by a.obey
     </select>
     
     

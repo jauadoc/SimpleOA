@@ -1,99 +1,103 @@
 			<style type="text/css">
-				/*µÚÒ»ÖÖ£¬×ó²à¿ÉÒÔµ÷½Ú£¬ÓÒ²à¹Ì¶¨¡£   ====¸ÃÖÖÊÊºÏÓÃÓÚÏûÏ¢²é¿´£¬ÁªÏµÈËĞÅÏ¢²é¿´¡£*/
+				/*ï¿½ï¿½Ò»ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½Ú£ï¿½ï¿½Ò²ï¿½Ì¶ï¿½ï¿½ï¿½   ====ï¿½ï¿½ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½é¿´ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½Ï¢ï¿½é¿´ï¿½ï¿½*/
 				/*.right{position: absolute;left: 70%;top: 5px;}*/
-				/*µÚ¶şÖÖ£¬ÆÕÍ¨µÄÖĞ·Ö²¼¾Ö£¬ÀàËÆ°Ù¶ÈÄÇÖÖ*/
+				/*ï¿½Ú¶ï¿½ï¿½Ö£ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ğ·Ö²ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½Æ°Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½*/
+				.work-body{background:#C0DEED;}
 				.left{float: left;width: 30%;}
 				.right{margin-left: 30%;}
 				.left .msg{border:solid 1px black;margin:0 auto;width: 60%;height: 550px;overflow: auto;}
 				.right .detail{border:solid 1px black;width: 80%;height:550px;overflow: auto;}
 			</style>
-			<div class="left">
-				<div class="msg">
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
+			<div class="work-body">
+			
+				<div class="left">
+					<div class="msg">
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+					</div>
 				</div>
-			</div>
-			<div class="right">
-				<div class="detail">
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
-					<div>ddd</div>
+				<div class="right">
+					<div class="detail">
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+						<div>ddd</div>
+					</div>
 				</div>
 			</div>

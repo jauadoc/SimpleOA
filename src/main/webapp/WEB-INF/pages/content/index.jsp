@@ -3,6 +3,7 @@
 <%
 	String path = request.getContextPath();
 	String uid = request.getParameter("uid");
+	PageUser pageUser = (PageUser)request.getSession().getAttribute("pageUser");
  %>
 
 <html>
@@ -15,16 +16,18 @@
 /*第一种，左侧可以调节，右侧固定。   ====该种适合用于消息查看，联系人信息查看。*/
 /*.right{position: absolute;left: 70%;top: 5px;}*/
 /*第二种，普通的中分布局，类似百度那种*/
-.left {	float: left;width: 70%;}
+.left {	float: left;width: 70%;background: #C0DEED;}
 .right {margin-left: 70%;}
 .right .notice {width: 80%;border: solid black 1px;margin-top: 20px;margin-left: 10%;}
 .calenderDiv {position: absolute;top: 5px;left: 3px;right: 30%;float: left;}
 .one-mission{margin-left:10px;}
+#content{background: #C0DEED;}
 </style>
 
 
 <style type="text/css">
-	#body{background-color:#efefef}#CalendarMain{width:85%;height:460px;border:1px solid #ccc;margin-top:10px;margin-left:10px}#title{width:100%;height:30px;background-color:#b9121b}.selectBtn{font-weight:900;font-size:15px;color:#fff;cursor:pointer;text-decoration:none;padding:7px 10px 6px 10px}.selectBtn:hover{background-color:#1d953f}.selectYear{float:left;margin-left:50px;position:absolute}.selectMonth{float:left;margin-left:120px;position:absolute}.month{float:left;position:absolute}.nextMonth{float:right}.currentDay{float:right}#context{background-color:#fff;width:100%}.week{width:100%;height:30px}.week>h3{float:left;color:#808080;text-align:center;margin:0;padding:0;margin-top:5px;font-size:16px}.dayItem{float:left}.lastItem a{color:#d1c7b7!important;}.item{color:#333;float:left;text-align:center;cursor:pointer;margin:0;font-family:"微软雅黑";font-size:13px}.item:hover{color:#b9121b}.currentItem>a{background-color:#b9121b;width:25px;line-height:25px;float:left;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;color:#fff}#foots{width:100%;height:35px;background-color:#fff;border-top:1px solid #ccc;margin-top:-1px}#footNow{float:left;margin:6px 0 0 5px;color:#009ad6;font-family:"微软雅黑"}#Container{overflow:hidden;float:left}#center{width:100%;overflow:hidden}#centerMain{width:300%;margin-left:-100%}#selectYearDiv{float:left;background-color:#fff}#selectYearDiv>div{float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer;color:#909090}.currentYearSd,.currentMontSd{color:#f40!important}#selectMonthDiv{float:left;background-color:#fff}#selectMonthDiv>div{color:#909090;float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer}#selectYearDiv>div:hover,#selectMonthDiv>div:hover{background-color:#efefef}#centerCalendarMain{float:left}
+	.index-content{width:99%;height: 99%;border: none;}
+	#body{background-color:#efefef}#CalendarMain{width:85%;height:440px;border:1px solid #ccc;margin-top:10px;margin-left:10px}#title{width:100%;height:30px;background-color:#0085B5}.selectBtn{font-weight:900;font-size:15px;color:#fff;cursor:pointer;text-decoration:none;padding:7px 10px 6px 10px}.selectBtn:hover{background-color:#12a663}.selectYear{float:left;margin-left:50px;position:absolute}.selectMonth{float:left;margin-left:120px;position:absolute}.month{float:left;position:absolute}.nextMonth{float:right}.currentDay{float:right}#context{background-color:#fff;width:100%}.week{width:100%;height:30px}.week>h3{float:left;color:#808080;text-align:center;margin:0;padding:0;margin-top:5px;font-size:16px}.dayItem{float:left}.lastItem a{color:#d1c7b7!important;}.item{color:#333;float:left;text-align:center;cursor:pointer;margin:0;font-family:"微软雅黑";font-size:13px}.item:hover{color:#b9121b}.currentItem>a{background-color:#b9121b;width:25px;line-height:25px;float:left;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;color:#fff}#foots{width:100%;height:35px;background-color:#fff;border-top:1px solid #ccc;margin-top:-1px}#footNow{float:left;margin:6px 0 0 5px;color:#009ad6;font-family:"微软雅黑"}#Container{overflow:hidden;float:left}#center{width:100%;overflow:hidden}#centerMain{width:300%;margin-left:-100%}#selectYearDiv{float:left;background-color:#fff}#selectYearDiv>div{float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer;color:#909090}.currentYearSd,.currentMontSd{color:#f40!important}#selectMonthDiv{float:left;background-color:#fff}#selectMonthDiv>div{color:#909090;float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer}#selectYearDiv>div:hover,#selectMonthDiv>div:hover{background-color:#efefef}#centerCalendarMain{float:left}
 	.onwork{background:url(<%=path%>/jics/images/right.png) no-repeat}
 	.workdays{float:right}
 	.m-layer{}
@@ -36,7 +39,7 @@
 </head>
 <body id="body">
 <!-- 	.showDateDetail{z-index:9999999;position:relative;top:20%;left:10%;right:50%;background:rgba(111,111,111,0.5)} -->
-
+<div class="index-content">
 	<div class="left">
 		<div class="calenderDiv">
 			<div id="CalendarMain">
@@ -84,16 +87,16 @@
 		</div>
 	</div>
 	<div class="right">
-		公告
 		<div class="split"></div>
+		公告
 		<div class="notice-announcement">
 			<div class="annoucement notice clearfix">
 				--&nbsp 
 				<div>&nbsp</div>
 			</div>
 		</div>
-		新闻
 		<div class="split"></div>
+		新闻
 		<div class="notice-new">
 			<div class="news notice clearfix">
 				--&nbsp
@@ -144,7 +147,7 @@
 			    </div>
 		    </div></td></tr></tbody></table>
 		</div>
-
+</div>
 </body>
 <script type="text/javascript" src="http://www.pengyaou.com/jquery-1.4.min.js"></script>
 <script type="text/javascript">
