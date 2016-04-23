@@ -1,0 +1,11 @@
+
+/*布局*/
+.sun-float-left{float: left;}
+.sun-float-right{float: right;}
+
+/*模块*/
+.sun-border-elegance{border: solid 1px #DDD;padding: 4px;border-radius: 4px;}
+.sun-border-default{}
+
+.sun-input-elegance{cursor: auto;padding: 3px;border: 1px inset;border-radius: 3px;}
+.sun-input-disable{background: #EBEBE4;cursor:default;}

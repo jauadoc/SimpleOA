@@ -16,19 +16,20 @@
 /*第一种，左侧可以调节，右侧固定。   ====该种适合用于消息查看，联系人信息查看。*/
 /*.right{position: absolute;left: 70%;top: 5px;}*/
 /*第二种，普通的中分布局，类似百度那种*/
-.left {	float: left;width: 70%;background: #C0DEED;}
+.left {	float: left;width: 70%;}
 .right {margin-left: 70%;}
-.right .notice {width: 80%;border: solid black 1px;margin-top: 20px;margin-left: 10%;}
+.right .notice {width: 80%;margin-top: 20px;margin-left: 10%;border-color: #58ACED;}
 .calenderDiv {position: absolute;top: 5px;left: 3px;right: 30%;float: left;}
 .one-mission{margin-left:10px;}
-#content{background: #C0DEED;}
+#content{}
 </style>
 
 
 <style type="text/css">
 	.index-content{width:99%;height: 99%;border: none;}
 	#body{background-color:#efefef}#CalendarMain{width:85%;height:440px;border:1px solid #ccc;margin-top:10px;margin-left:10px}#title{width:100%;height:30px;background-color:#0085B5}.selectBtn{font-weight:900;font-size:15px;color:#fff;cursor:pointer;text-decoration:none;padding:7px 10px 6px 10px}.selectBtn:hover{background-color:#12a663}.selectYear{float:left;margin-left:50px;position:absolute}.selectMonth{float:left;margin-left:120px;position:absolute}.month{float:left;position:absolute}.nextMonth{float:right}.currentDay{float:right}#context{background-color:#fff;width:100%}.week{width:100%;height:30px}.week>h3{float:left;color:#808080;text-align:center;margin:0;padding:0;margin-top:5px;font-size:16px}.dayItem{float:left}.lastItem a{color:#d1c7b7!important;}.item{color:#333;float:left;text-align:center;cursor:pointer;margin:0;font-family:"微软雅黑";font-size:13px}.item:hover{color:#b9121b}.currentItem>a{background-color:#b9121b;width:25px;line-height:25px;float:left;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;color:#fff}#foots{width:100%;height:35px;background-color:#fff;border-top:1px solid #ccc;margin-top:-1px}#footNow{float:left;margin:6px 0 0 5px;color:#009ad6;font-family:"微软雅黑"}#Container{overflow:hidden;float:left}#center{width:100%;overflow:hidden}#centerMain{width:300%;margin-left:-100%}#selectYearDiv{float:left;background-color:#fff}#selectYearDiv>div{float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer;color:#909090}.currentYearSd,.currentMontSd{color:#f40!important}#selectMonthDiv{float:left;background-color:#fff}#selectMonthDiv>div{color:#909090;float:left;text-align:center;font-family:"微软雅黑";font-size:16px;border:1px solid #ccc;margin-left:-1px;margin-top:-1px;cursor:pointer}#selectYearDiv>div:hover,#selectMonthDiv>div:hover{background-color:#efefef}#centerCalendarMain{float:left}
-	.onwork{background:url(<%=path%>/jics/images/right.png) no-repeat}
+	.onwork{background:url(<%=path%>/jics/images/right.png) no-repeat;background-position: center;}
+	.onabsent{background:url(<%=path%>/jics/images/wrong.png) no-repeat;background-position: center;}
 	.workdays{float:right}
 	.m-layer{}
 	.hidden{display:none;visibility:hidden}
@@ -153,7 +154,7 @@
 <script type="text/javascript">
 	/* 显示今日细节 */
 	function showDetail(node) {
-		var oa_currDay = $(node).children("a").html();
+		var oa_currDay = $(node).children("div").children("a").html();
 		var oa_currMonth = $(".selectMonth").html().substring(0,$(".selectMonth").html().length-1);
 		var oa_currYear = $(".selectYear").html().substring(0,$(".selectYear").html().length-1);
 		var oa_date = oa_currYear+"-"+oa_currMonth+"-"+oa_currDay;
@@ -223,10 +224,10 @@
 				var announcementHtml = "";
 				for(var i=0;i<notices.length;i++){
 					if(notices[i].kind=="new"){
-		      			newHtml += "<a href='"+notices[i].href+"'><div class='news notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
+		      			newHtml += "<a href='"+notices[i].href+"'><div class='news notice clearfix sun-border-elegance'><div>--"+notices[i].date+"<span class='float-right sun-border-elegance'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
 					}
 					if(notices[i].kind=="announcement"){
-		      			announcementHtml += "<a href='"+notices[i].href+"'><div class='announcement notice clearfix'><div>--"+notices[i].date+"<span class='float-right'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
+		      			announcementHtml += "<a href='"+notices[i].href+"'><div class='announcement notice clearfix sun-border-elegance'><div>--"+notices[i].date+"<span class='float-right sun-border-elegance'>"+notices[i].department+"</span></div><div>"+notices[i].content+"</div></div></a>";
 					}
 				}
 				$(".notice-new").html(newHtml);
@@ -525,7 +526,7 @@
 					}
 				}
 				
-				var days = $(".currMon");//1,2,3,4,5,6,7,8
+				var days = $(".currMon-day");//1,2,3,4,5,6,7,8
 				for(var i=0;i<days.length;i++){
 					var day = $(days[i]).children("a").html();
 					if(day.length==1){
@@ -564,22 +565,22 @@
 				if (work) {
 					if (i == (nowDay - 1)) {
 						$dayItem
-								.append("<div class=\"currMon item currentItem\" onClick=\"showDetail(this)\"><a>"
-										+ (i + 1) + "</a></div>");
+								.append("<div class=\"currMon item currentItem\" onClick=\"showDetail(this)\"><div class='currMon-day'><a>"
+										+ (i + 1) + "</a></div></div>");
 					} else {
 						$dayItem
-								.append("<div class=\"currMon item\" onClick=\"showDetail(this)\"><a>"
-										+ (i + 1) + "</a></div>");
+								.append("<div class=\"currMon item\" onClick=\"showDetail(this)\"><div class='currMon-day'><a>"
+										+ (i + 1) + "</a></div></div>");
 					}
 				} else {
 					if (i == (nowDay - 1)) {
 						$dayItem
-								.append("<div class=\"currMon item currentItem\" onClick=\"showDetail(this)\"><a>"
-										+ (i + 1) + "</a></div>");
+								.append("<div class=\"currMon item currentItem\" onClick=\"showDetail(this)\"><div class='currMon-day'><a>"
+										+ (i + 1) + "</a></div></div>");
 					} else {
 						$dayItem
-								.append("<div class=\"currMon item\" onClick=\"showDetail(this)\"><a>"
-										+ (i + 1) + "</a></div>");
+								.append("<div class=\"currMon item\" onClick=\"showDetail(this)\"><div class='currMon-day'><a>"
+										+ (i + 1) + "</a></div></div>");
 					}
 				}
 			}

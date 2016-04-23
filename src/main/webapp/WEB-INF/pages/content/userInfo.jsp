@@ -1,135 +1,173 @@
-<style type="text/css">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	import="com.sun.entity.PageUser" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String uid = request.getParameter("uid");
+	PageUser pageUser = (PageUser)request.getSession().getAttribute("pageUser");
+ %>
+			
+			
+			<style type="text/css">
 				.person{position: absolute;top: 5px;left: 3px;width: 100%;height: 100%;overflow: auto;}
-				.information{width: 1000px;}
-				.col div{display: inline-block;width: 40%;height: 30px;font-size: 16px;}
-				.col .title{width: 14%;text-align: right;}
-				.row{margin-top: 5px;}
+				.information{width: 90%;margin:0 auto;font:22px;line-height: 22px;}
+				.userInfo-split{border-bottom: 1px dashed #0085B5;height:8px;content: ".";overflow: hidden;color: white;width: 70%;margin:0 auto;}
+				
+				/* col閫氱敤鏍峰紡 */
+				.col{overflow: hidden;}
+				.col .col-unit{display: inline-block;width: 46%;height: 30px;font-size: 16px;}
+				.info-head div{display: inline-block;}
+				.col .title{width: 14%;margin-left:25%;text-align: right;margin-right: 7%;}
+				.userInfo-row{margin-top:1%;}
+				
 				.col .submit{margin-right: 5%;width: 35px;}
 				.col .reset{margin-left: 5%;width: 35px;}
-				.col .uhead{width: 100px;height: 100px;border:solid 1px black;}
-				.headinfo{height: 100px;}
+				.col .uhead{width: 80px;height: 80px;border:solid 1px black;}
+				.headinfo{height: 90px;}
+				.col .btn{height: 20px;}
+				.sun-input-default{height: 20px;width: 50%;}
+				.sun-input-default:hover{border: solid 1px #0085B5;}
 			</style>
 			<div class="person">
 				<div class="information">
 					<br>
-					个人信息
+					涓汉淇℃伅
 					<div class="split"></div>
-					<!-- 这里所有的title写上指定id用来辨识数据库对应id -->
-					<div class="row">
+					<!-- 杩欓噷鎵�鏈夌殑title鍐欎笂鎸囧畾id鐢ㄦ潵杈ㄨ瘑鏁版嵁搴撳搴攊d -->
+					<div class="userInfo-row">
 						<div class="col headinfo">
-							<div class="title">头像:</div>
-							<div class="info">
+							<div class="title col-unit">澶村儚:</div>
+							<div class="info col-unit info-head">
 								<div class="uhead">&nbsp</div>
 								<div>
 									<input type="file" name="nickname">
 								</div>
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title" id="name">姓名:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit" id="name">濮撳悕:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default sun-input-disable" disabled="disabled" value="瀛欐柊">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">移动电话:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">绉诲姩鐢佃瘽:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">家庭住址:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">瀹跺涵浣忓潃:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title" id="name">姓名:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit" id="name">濮撳悕:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">移动电话:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">绉诲姩鐢佃瘽:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">家庭住址:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">瀹跺涵浣忓潃:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									鎻愮ず淇℃伅
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title" id="name">姓名:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit" id="name">濮撳悕:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">移动电话:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">绉诲姩鐢佃瘽:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">家庭住址:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">瀹跺涵浣忓潃:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title" id="name">姓名:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit" id="name">濮撳悕:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">移动电话:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">绉诲姩鐢佃瘽:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col">
-							<div class="title">家庭住址:</div>
-							<div class="info">
-								<input type="text" name="nickname">
+							<div class="title col-unit">瀹跺涵浣忓潃:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
-					<div class="row">
+					<div class="userInfo-row">
 						<div class="col sub">
-							<div class="title"></div>
-							<div class="info">
-								<div class="submit u-btn" onclick="sumbit()">提交</div>
-								<div class="reset u-btn">重置</div>
+							<div class="title col-unit"></div>
+							<div class="info col-unit">
+								<div class="submit sun-button-blue btn" onclick="sumbit()">鎻愪氦</div>
+								<div class="reset sun-button-blue btn">閲嶇疆</div>
 							</div>
 						</div>
+						<div class="userInfo-split"></div>
 					</div>
 				</div>
 			</div>

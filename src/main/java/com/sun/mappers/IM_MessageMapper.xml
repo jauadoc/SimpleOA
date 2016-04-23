@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.dao.IM_Message">
+
+
+    
+  	<!-- 获取功能列表sql -->
+	<resultMap id="message" type="com.sun.entity.data.Message">      
+		<result property="id" column="id"/> 
+		<result property="title" column="title"/> 
+		<result property="content" column="content"/> 
+		<result property="sender" column="sender"/> 
+		<result property="date" column="date"/> 
+		<result property="is_read" column="is_read"/> 
+		<result property="sender_name" column="sender_name"/> 
+		<result property="uid" column="uid"/> 
+		<result property="kind" column="kind"/> 
+	</resultMap> 
+
+    
+    
+<!--         SELECT id,name,description,executor,publisher,start_date,end_date,is_end,is_overdate,is_delay from oa.o_mission where executor=#{intParam1 } and is_end=102 and start_date<![CDATA[<=]]>#{dateParam1 } and end_date<![CDATA[>=]]>#{dateParam1 } order by start_date -->
+    <select id="getMessageByUid" parameterType="com.sun.entity.data.Message" resultMap="message">
+		select id,title,content,sender,date,is_read,sender_name,uid,kind from oa.o_message 
+		<where>
+			uid=#{uid} and kind=#{kind} order by date desc
+		</where>
+    </select>
+	
+	<delete id="deleteMessageById" parameterType="java.util.List">
+		delete from oa.o_message where id in
+		<foreach collection="list" item="mid" open="(" separator="," close=")">
+			 #{mid}
+		</foreach>
+	</delete>
+	
+	<update id="setMessageIsReadByid" parameterType="int">
+		update oa.o_message set is_read=101 where id=#{mid }
+	</update>
+</mapper>

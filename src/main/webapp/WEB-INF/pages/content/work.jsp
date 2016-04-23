@@ -13,13 +13,14 @@
 			.work-content{width:99%;height: 99%;border: none;}
 /* 			.work{background:#C0DEED;} */
 /* 			.work{position: absolute;top: 5px;left: 3px;width: 100%;height: 100%;overflow: auto;} */
-			.choose{width: 23%;height:20%;float: left;border: solid 1px black;margin: 1% 3px;display: block;border-radius: 20px;}
+			.choose{width: 20%;height:60px;float: left;border: solid 1px black;margin: 1% 3px;display: block;border-radius: 20px;padding:8px;color:#EEE;font-size: 20px;line-height: 20px;}
+			.choose:hover{background:#EE4444;}
 			.choose .icon{float:left;width:20%;height:100%;}
 			.choose .title{float:left;width:70%;height:100%;margin-top:10%;margin-bottom:10%;text-align: center;vertical-align: middle;}
 			<%
 				for(int i=0;i<100;i++){
 			%>
-					.c-<%=i%>{background: rgb(<%=ColorUtil.getWarmRandomColor()%>);}	
+					.c-<%=i%>{background: rgb(<%=ColorUtil.getColdRandomColor()%>);}	
 			<%
 				}
 			%>

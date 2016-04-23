@@ -10,9 +10,13 @@
 			data:{xx:{},oo:{}},
 			date:2014
 		}
+		
+		标准数据对象的json ,使用jsonUtil.wirteJson(List<Object> list,OutputStream write)   ---利用反射来将数据对象的字段和值写入json
 2.后端数据模型
 	1.model
 		1.每张表对应一个model，存于entitiy.data
+		2.每个数据对象都有一个对应Outxx数据对象，用来返回前端需要的数据对象，查询后拼接Outxx数据对象list，然后jsonUtil.writeJson()来返回前端json
+		3.每个数据对象在使用mybatis查询是一定要初始化一个数据对象，尽管有些值不需要，但是不初始化一个全信息的对象，mybatis会查询报错;
 	2.service
 		1.布局中content的显示模块，每个模块对应一个service	如M_IndexService，即index模块的service，该功能则在该service中实现
 	3.controller

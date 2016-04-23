@@ -51,6 +51,14 @@
 	2.首页个人信息模块设置成可控制显示与否
 	3.function表的name字段设置为uniqu
 	4.提示信息开发
+2016年4月20日 
+	1.message获取信息接口
+	2.index目录，message导航  的前端bug修正
+	3.更改message表结构，添加uid，sender_name,kind字段
 	 
-	 
-	
+2016年4月22日
+	1.message相关接口
+		1.删除接口
+		2.已阅读接口
+	2.message相关前端逻辑
+	3.friend

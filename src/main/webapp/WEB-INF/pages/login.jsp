@@ -13,10 +13,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="shortcut icon" type="image/x-icon" href="<%=path%>/jics/images/webLogo/logo.png" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/plugin.css">
+	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/basic-sun.css">
 	<script type="text/javascript" src="<%=path%>/jics/js/jquery.js"></script>
-	</style>
-	<!--[if lt IE 7]>
+	<script type="text/javascript" src="<%=path%>/jics/js/common.js"></script>
+	<!--[if lt IE 8]>
 		<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/ie-plugin.css">
+		<style>
+			.login{background:#505E5D;}
+		</style>
+	<![endif]-->
+	<!--[if IE 8]>
+		<style>
+			.login{background:#505E5D;}
+		</style>
 	<![endif]-->
 	<title>请登录</title>
 
@@ -33,21 +42,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	.hidden{display: none;visibility: hidden;position: relative;top: 10px;color: white;}
 	.no:hover .hidden{display: block;visibility: visible;z-index: 9999;}
 
+
+
+	/* 提示信息框  */
+	.g-notice,.g-notice .lymask{top:0;left:0;width:100%;height:100%;}
+	.g-notice{position:fixed;_position:absolute;z-index:999;}
+	.g-notice .lytable{table-layout:fixed;width:100%;height:100%;}
+	.g-notice .lytd{width:100%;height:100%;vertical-align:middle;}
+	.g-notice .lywrap{position:relative;width:400px;margin:0 auto;background:white;height:30px;middle;text-align: center;vertical-align: middle;line-height: 30px;}
+	.g-notice-success{border:5px solid #49c43b;border-radius:5px;}
+	.g-notice-error{border:5px solid #EA4335;border-radius:5px;}
+	.g-notice-up{margin-top:-3px;}
+	.g-notice-down{margin-top:3px;}
+	.inputNode{height: 20px;width: 80%;}
 </style>
 <script type="text/javascript">
-		document.onkeydown = function(e){
-			if(!e) e = window.event;
-			if((e.keyCode || e.which) == 13){
-				var obtnLogin=document.getElementById("submit_btn")
-				obtnLogin.focus();
-			}
+	document.onkeydown = function(e){
+		if(!e) e = window.event;
+		if((e.keyCode || e.which) == 13){
+			var obtnLogin=document.getElementById("submit_btn")
+			obtnLogin.focus();
 		}
+	}
+
 
   	$(function(){
 			//提交表单
 			$('#submit_btn').click(function(){
 				//var myReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;//邮箱正则
 				var myReg = /^[a-zA-z][a-zA-Z0-9_]{2,9}$/; //邮件正则
+				var markSuccess = false;
 				if(/^[\u4e00-\u9fa5]+$/.test($('#uname').val())){
 					 alert("用户名不应该是汉字");
 					 $('#uname').focus();
@@ -83,21 +107,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						},
 						success: function (data) {
 							data = JSON.parse(data);
-							$(".login-btnbox").removeClass("hidden");
-							$(".login-notice").addClass("hidden");
 							var status = data.status;
-							alert(data.data);
 							if(status=="success"){
+								showMsg(data.data,"success");
 								location.href="index.do";
+							}else{
+								showMsg(data.data,"error",1);
+								$(".login-btnbox").removeClass("hidden");
+								$(".login-notice").addClass("hidden");
 							}
+							markSuccess = true;
 						},
 						error:function(data){
+							showMsg("登录失败","success");
 							$(".login-btnbox").removeClass("hidden");
 							$(".login-notice").addClass("hidden");
 						},
 						beforeSend: function (xhr) {
+							markSuccess = false;
 							$(".login-btnbox").addClass("hidden");
+							$(".login-notice").removeClass("hidden");
 							$(".login-notice").html("正在验证....");
+							var mark = 0;
+							var step = function(){
+								if(mark>=30){
+									offAnimation();
+								}else{
+									mark ++;
+								}
+							}
+							var offAnimation = function() {
+								clearInterval(intervalId);
+								$(".login-btnbox").removeClass("hidden");
+								$(".login-notice").addClass("hidden");
+								if(!markSuccess){
+									showMsg("登录请求超时，请重新尝试","error");
+								}
+							}
+							// 设置定时器，触发的间隔为10毫秒
+							var intervalId = setInterval(step, 100);
 						}
 					});
 				}
@@ -115,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						用户名:
 					</div>
 					<div class="right">
-						<input type="text" class="u-ipt" id="uname" name="uname" placeholder="请输入用户名" value="sun"></input>
+						<input type="text" class="sun-input-default inputNode" id="uname" name="uname" placeholder="请输入用户名" value="sun"></input>
 					</div>
 				</div>
 				<div class="unit">
@@ -123,7 +171,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						密码:
 					</div>
 					<div class="right">
-						<input type="password" class="u-ipt" id="pwd" name="pwd" placeholder="请输入密码" value="123"></input>
+						<input type="password" class="sun-input-default inputNode" id="pwd" name="pwd" placeholder="请输入密码" value="123"></input>
 					</div>
 				</div>
 				<div class="unit">
@@ -131,8 +179,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</div>
 					<div class="right">
 						<div class="login-btnbox">
-							<input type="button" class="u-btn" id="submit_btn" value="登录"></input>
-							<input type="reset" class="u-btn" value="重置"></input>
+							<input type="button" class="sun-button-blue" id="submit_btn" value="登录"></input>
+							<input type="reset" class="sun-button-blue" value="重置"></input>
 						</div>
 						<div class="login-notice">
 							
@@ -163,6 +211,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 
-</div>
+	<div class="g-notice hidden ">
+	    <table class="lytable "><tbody><tr><td class="lytd">
+	    <div class="lywrap" id="g-notice-content">
+	    </div></td></tr></tbody></table>
+	</div>
 </body>
 </html>

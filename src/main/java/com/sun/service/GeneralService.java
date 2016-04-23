@@ -51,12 +51,10 @@ public class GeneralService {
 		if(pageUser==null || pageUser==new PageUser()){
 			String json = mapper.writeValueAsString(new OutMessage("error", userWrong, DateUtil.yyyyMMdd.format(new Date())));
 			response.getWriter().write(json);
+			return;
 		}
 		request.getSession().setAttribute("pageUser", pageUser);
 		String json = mapper.writeValueAsString(new OutMessage("success", userRight, DateUtil.yyyyMMdd.format(new Date())));
 		response.getWriter().write(json);
-		
-		Map<String,Object> mv = new HashMap<String,Object>();
-		mv.put("pageUser", pageUser);
 	}
 }

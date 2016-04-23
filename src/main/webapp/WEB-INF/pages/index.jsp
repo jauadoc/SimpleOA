@@ -18,7 +18,9 @@
 	<link rel="shortcut icon" type="image/x-icon" href="<%=path%>/jics/images/webLogo/logo.png" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/plugin.css">
+	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/basic-sun.css">
 	<script type="text/javascript" src="<%=path%>/jics/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=path%>/jics/js/common.js"></script>
 	
 	<style type="text/css">
 	</style>
@@ -41,19 +43,20 @@
 	html,body,.g-body{height: 100%;overflow: hidden;}
 	.g-head{position: absolute;left:0px;top:0px;width: 100%; height:60px;border-bottom: #666 solid 1px;background: #58ACED;}
 	.g-left{position: absolute;left: 0px;top:60px;bottom:30px;border-right: #666 solid 1px;width: 200px;z-index:999;background: #313B36;}
-	.g-content{position: absolute;left: 200px;top: 60px;right: 0px;bottom: 30px;background: #C0DEED;}
+	.g-content{position: absolute;left: 200px;top: 60px;right: 0px;bottom: 30px;}
 	.g-footer{position: absolute;left: 0px;bottom: 0px;border-top: #666 solid 1px;width: 100%;height: 30px;background: #242525;}
-	.g-contentNoLeft{position: absolute;left: 0px;top: 60px;right: 0px;bottom: 30px;background: #C0DEED;}
+	.g-contentNoLeft{position: absolute;left: 0px;top: 60px;right: 0px;bottom: 30px;}
 	
 	/*头模块样式*/
 	.m-head{width: 100%;height: 60px;display: table;vertical-align: top;}
-	.m-head .sys-title{width:60%;height: 60px;line-height: 60px;font-size: 36px;margin-left: 20px;display: table-cell;}
-	.m-head .sys-title .logo,.m-head .sys-title .title{display: inline-block;}
-	.m-head .m-nav{display: table-cell;height: 54px;font-size:9px;}
-	.m-head .m-nav .dir{display: table-cell;border-top: solid #CBA 1px;border-left: solid #CBA 1px;border-right: solid #CBA 1px;width: 120px;color: #FFF;height: 54px;text-align: center;}
+	.m-head .sys-title{width:40%;height: 58px;line-height: 58px;font-size: 36px;margin-left: 20px;display: table-cell;vertical-align: middle;}
+	.m-head .sys-title .logo,.m-head .sys-title .title{display: table-cell;}
+	.m-head .m-nav{float:right;height: 60px;font-size:9px;overflow: hidden;display: table-cell;}
+	.m-head .m-nav .dir{width: 120px;color: #FFF;height: 60px;text-align: center;cursor: pointer;padding: 0px;display: table-cell;}
 	.check{background: #0085B5;}
 
 	/*左模块样式*/
+	.m-instro{overflow: hidden;}
 	.m-instro .u-info .head{border-radius:100%;width: 100px;height:100px;margin: 2% auto;border: solid 3px #DDD;overflow: hidden;}
 	.m-instro .u-info .underHead{width: 60%;margin: 2% auto;border: solid 1px #666;overflow: hidden;text-align: center;color:#CCC;display: block;font-size: 16px;line-height: 16px;}
 	.m-instro .u-info .job{width: 60%;margin: 2% auto;border: solid 1px #666;overflow: hidden;text-align: center;color:#CCC;display: block;font-size: 16px;line-height: 16px;}
@@ -61,11 +64,13 @@
 	.m-instro .u-use{width:100%;margin:15px auto;font-size: 12px;line-height: 12px;text-align: center;}
 	.m-instro .oneSelect{display:inline-block;margin:2px 2px;}
 	.m-layer{}
-	.m-instro .hiddenLeft{position: absolute;top:50%;left:180px;color:white;border:solid 3px #DDD;float:right;font-size:20px;}
-	.left-open{position: absolute;top:50%;left:-10px;color:#333;border:solid 3px #333;float:right;font-size:20px;z-index:998;}
+	#oa-head img{cursor:pointer;}
+	
+	.m-instro .hiddenLeft{position: absolute;top:50%;left:164px;border:solid 3px #DDD;float:right;font-size:20px;cursor: pointer;border-radius:4px;width: 24px;background: #DDD;color:#333;}
+	.left-open{position: absolute;top:50%;left:-10px;border:solid 3px #333;float:right;font-size:20px;z-index:998;cursor: pointer;border-radius:4px;width: 24px;background: #333;color:#DDD;}
 	/*右模块样式*/
 	.g-content{display: table-cell;vertical-align: middle;}
-	.g-content .data{width: 100%;height: 98%;margin-left: 3px;margin-top: 5px;margin-bottom: 1%;overflow: auto;background: #C0DEED;}
+	.g-content .data{width: 100%;height: 98%;margin-left: 3px;margin-top: 5px;margin-bottom: 1%;overflow: auto;}
 	
 	/*底模块样式*/
 	.g-footer{color: white;text-align: center;}
@@ -77,8 +82,8 @@
 	.g-notice .lytable{table-layout:fixed;width:100%;height:100%;}
 	.g-notice .lytd{width:100%;height:100%;vertical-align:middle;}
 	.g-notice .lywrap{position:relative;width:400px;margin:0 auto;background:white;height:30px;middle;text-align: center;vertical-align: middle;line-height: 30px;}
-	.g-notice-success{border:5px solid #49c43b;}
-	.g-notice-error{border:5px solid #EA4335;}
+	.g-notice-success{border:5px solid #49c43b;border-radius:5px;}
+	.g-notice-error{border:5px solid #EA4335;border-radius:5px;}
 	.g-notice-up{margin-top:-3px;}
 	.g-notice-down{margin-top:3px;}
 </style>
@@ -175,7 +180,7 @@
       		success: function (data) {
       			data = JSON.parse(data);
       			if(data.status=="success"){
-					showMsg(data.data, "success");
+					showMsg("修改成功", "success",1.5);
       				hiddenWindow();
       			}else{
 					showMsg(data.data, "error");
@@ -184,7 +189,7 @@
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
-				showMsg("快捷方式添加失败，请重新提交", "error");		
+				showMsg("快捷方式修改失败，请重新提交", "error");		
 			},
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
@@ -239,7 +244,7 @@
       		success: function (data) {
       			data = JSON.parse(data);
 				/* 暂无接口实现，前端测试 =====================================*/
-      			$("#oa-head").html("<img src='"+data.data.head+"'/>");
+      			$("#oa-head").html("<img src='"+data.data.head+"' onclick='oa_userInfo(\"<%=uid %>\")'/>");
       			$("#oa-name").html(data.data.name);
       			$("#oa-job").html(data.data.job);
       			$("#oa-out").html("退出登录");
@@ -283,14 +288,14 @@
       			var dirs = data.data.directory;
       			var dirHtml = "";
       			for(var i=0;i<data.data.directory.length;i++){
-      				dirHtml += "<a href='javascript:void(0)' onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir' data-href='"+data.data.directory[i].href+"'><div onclick='chooseThis(this)'><img src='<%=path%>/"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</a>";
+      				dirHtml += "<div onclick='goPage(\""+data.data.directory[i].href+"\")' class='dir sun-border-elegance' data-href='"+data.data.directory[i].href+"'><div onclick='chooseThis(this)'><div><img src='<%=path%>/"+data.data.directory[i].img+"'></div>"+data.data.directory[i].name+"</div></div>";
       			}
       			
       			$("#oa-m-nav").html(dirHtml);
 //       			$(".logo").html("<img src='"+data.data.logo+"'/>");
       			/*获取目录信息后，调用goPage函数，让中间Content请求index首页数据*/
       			/*这里也可以直接触发 目录div 下的第一个div的onclik，顺带还可以完成前端逻辑*/
-      			var nav_as = $("#oa-m-nav").children("a");
+      			var nav_as = $("#oa-m-nav").children(".dir");
 				$(nav_as[0]).addClass("check");
       			goPage(data.data.directory[0].href);
 			},
@@ -307,7 +312,7 @@
 	}
 	/* end-4.系统信息获取业务逻辑-------------------------------------------------- */
 	function chooseThis(node){
-		var nav_as = $("#oa-m-nav").children("a");
+		var nav_as = $("#oa-m-nav").children(".dir");
 		for(var i=0;i<nav_as.length;i++){
 			$(nav_as[i]).removeClass("check");
 			
@@ -322,63 +327,33 @@
 		$(".g-content").addClass("g-contentNoLeft");
 		$(".g-contentNoLeft").removeClass("g-content");
 		$(".left-open").removeClass("hidden");
+      	CalendarHandler.initialize();
+		
 	}
 	function showLeft(){
 		$(".g-left").removeClass("hidden");
 		$(".g-contentNoLeft").addClass("g-content");
 		$(".g-content").removeClass("g-contentNoLeft");
 		$(".left-open").addClass("hidden");
+      	CalendarHandler.initialize();
 	}
-	function showMsg(msg,status){
-	  		$(".g-notice").removeClass("hidden");
-		$("#g-notice-content").html(msg);
-		if(status=="success"){
-			$(".lywrap").removeClass("g-notice-error");
-			$(".lywrap").addClass("g-notice-success");
+	
+	function oa_userInfo(uid){
+		var dirs = $(".m-nav").children(".dir");
+		for(var i=0;i<dirs.length;i++){
+			var goToPage = $(dirs[i]).attr("data-href");
+			if("userInfo"==goToPage){
+				chooseThis($(dirs[i]).children("div"));
+			}
 		}
-		if(status=="error"){
-			$(".lywrap").removeClass("g-notice-success");
-			$(".lywrap").addClass("g-notice-error");
-		}
-		var i=0;
-	    var step =  function(){
-	    	if(i>64){
-	    		offAnimation();
-	    	}
-	    	if(i<12){
-	// 	    	上移
-		    	if(i%4==1){
-		    		$(".g-notice").removeClass("g-notice-down");
-		    		$(".g-notice").addClass("g-notice-up");
-		    	}
-	// 	    	中间
-		    	if(i%2==0){
-		    		$(".g-notice").removeClass("g-notice-up");
-		    		$(".g-notice").removeClass("g-notice-up");
-		    	}
-	// 	    	下移
-		    	if(i%4==3){
-		    		$(".g-notice").removeClass("g-notice-up");
-		    		$(".g-notice").addClass("g-notice-down");
-		    	}
-	    	}else{
-	    	
-	    	}
-	    	i++;
-	    }
-	    var offAnimation = function(){
-	  		clearInterval(intervalId);  
-	  		$(".g-notice").addClass("hidden");
-	    }
-	    //设置定时器，触发的间隔为10毫秒
-	    var intervalId = setInterval(step,30);
+		goPage("userInfo");
 	}
 </script>
 </head>
 <body>
 
 <div class="g-body">
-	<div class="left-open hidden" onclick="showLeft()">→</div>
+	<div class="left-open hidden sun-border-elegance" onclick="showLeft()">→</div>
 	<div class="g-left">
 		<div class="m-instro">
 			<div class="u-info">
@@ -394,7 +369,7 @@
 				<a href="javascript:void(0)" class="quickuse">&nbsp</a>
 				<a href="javascript:void(0)" class="quickuse">&nbsp</a>
 			</div>
-			<div class="hiddenLeft" onclick="hiddenLeft()">←</div>
+			<div class="hiddenLeft sun-border-elegance" onclick="hiddenLeft()">←</div>
 		</div>
 	</div>
 	<div class="g-head">
@@ -405,22 +380,6 @@
 			</div>
 			<div class="m-nav clearfix" id="oa-m-nav">
 				
-				<a href="javascript:void(0)" class="dir check">
-					<div><img src=""></div>
-					首页
-				</a>
-				<a href="javascript:void(0)" class="dir">
-					<div><img src=""></div>
-					消息
-				</a>
-				<a href="javascript:void(0)" class="dir">
-					<div><img src=""></div>
-					工作
-				</a>
-				<a href="javascript:void(0)" class="dir">
-					<div><img src=""></div>
-					联系人
-				</a>
 			</div>
 		</div>		
 	</div>
