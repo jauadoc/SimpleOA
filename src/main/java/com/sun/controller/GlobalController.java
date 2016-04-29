@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sun.dao.IUser;
+import com.sun.entity.InMessage_group;
 import com.sun.entity.OutMessage;
 import com.sun.entity.PageUser;
 import com.sun.service.GeneralService;

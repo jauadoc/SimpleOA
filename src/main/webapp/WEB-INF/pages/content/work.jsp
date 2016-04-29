@@ -9,11 +9,13 @@
 <!-- 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
 <!-- 		<meta http-equiv="content-type" content="text/html;charset=utf-8"> -->
 <!-- 		<title>Html日历插件</title> -->
+
+	<meta name="viewport" content="width=device0width,initial-scale=1.0,user-scalable=no">
 		<style type="text/css">
 			.work-content{width:99%;height: 99%;border: none;}
 /* 			.work{background:#C0DEED;} */
 /* 			.work{position: absolute;top: 5px;left: 3px;width: 100%;height: 100%;overflow: auto;} */
-			.choose{width: 20%;height:60px;float: left;border: solid 1px black;margin: 1% 3px;display: block;border-radius: 20px;padding:8px;color:#EEE;font-size: 20px;line-height: 20px;}
+			.choose{width: 20%;height:60px;float: left;margin: 1% 3px;display: block;border-radius: 20px;padding:8px;color:#EEE;font-size: 20px;line-height: 20px;transition: 0.5s;}
 			.choose:hover{background:#EE4444;}
 			.choose .icon{float:left;width:20%;height:100%;}
 			.choose .title{float:left;width:70%;height:100%;margin-top:10%;margin-bottom:10%;text-align: center;vertical-align: middle;}
@@ -59,14 +61,14 @@
 		//       			var data = {"functions":[{"name":"test","isChoose":"no"},{"name":"test1","isChoose":"no"},{"name":"test2","isChoose":"no"},{"name":"test3","isChoose":"no"},{"name":"test4","isChoose":"no"},{"name":"test41","isChoose":"no"},{"name":"test42","isChoose":"no"},{"name":"test421","isChoose":"no"}]};
 		      			var html = "";
 		      			for(var i=0;i<data.functions.length;i++){
-		      				html += "<a href='javascript:void(0)' onclick='goPage(\""+data.functions[i].href+"\")' class='choose'><div class='icon'><img src='<%=path %>/"+data.functions[i].icon+"'></div><div class='title'>"+data.functions[i].name+"</div>\</a>";
+		      				html += "<a href='javascript:void(0)' onclick='goPage(\""+data.functions[i].href+"\")' class='choose sun-border-elegance'><div class='icon'><img src='<%=path %>/"+data.functions[i].icon+"'></div><div class='title'>"+data.functions[i].name+"</div>\</a>";
 		      			}
 						$(".work").html(html);
 						setWorkColor();
 					},
 					//请求失败遇到异常触发
 					error: function (xhr, errorInfo, ex) { 
-						alert("error");
+						showMsg("数据请求异常");
 					},
 					beforeSend: function (xhr) {
 						xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');

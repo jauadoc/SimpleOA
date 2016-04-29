@@ -6,20 +6,21 @@
 	PageUser pageUser = (PageUser)request.getSession().getAttribute("pageUser");
  %>
 
+	<meta name="viewport" content="width=device0width,initial-scale=1.0,user-scalable=no">
 
 			<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/plugin.css">
 			<style type="text/css">
 				/* 布局样式 */
 				.msg-content{width:99%;height: 99%;border: none;}
-				.msg-content .left{float:left;width:20%;margin-left:2%;margin-top:2%;border:solid 1px #0085B5;border-right:none;}
+				.msg-content .left{float:left;width:10%;margin-left:4%;margin-top:2%;border:solid 1px #0085B5;border-right:none;}
 				.msg-content .right{float:left;width:70%;margin-top:2%;border:solid 1px #0085B5;}
 				
 				.msg-from{display: block;}
 				
 				.msg-title{background: #58ACED;margin-top:0px;height:30px;}
 				.msg-title .msg-unit-content{margin-top:0px;}
-				.msg-unit{height:55px;border-bottom: 1px dashed #0085B5;margin-top:3px;margin-bottom:3px;}
-				.msg-unit-content{width: 100%;height:50px;}
+				.msg-unit{border-bottom: 1px dashed #0085B5;margin-top:3px;margin-bottom:3px;}
+				.msg-unit-content{width: 100%;}
 				.msg-unit-content div{float:left;}
 				.msg-from{float:none;}
 				
@@ -282,7 +283,7 @@
 					<!-- 1.消息unit-model -->
 					<div class="msg-title sun-border-elegance">
 						<div class="msg-unit-content">
-							<div class="msg-unit-content-checkbox msg-unit-content-unit"><input type="checkbox" value="msg-id" onchange="msg_chooseAll()" id="chooseAll"/>全选</div>
+							<div class="msg-unit-content-checkbox msg-unit-content-unit"><input type="checkbox" value="msg-id" onchange="msg_chooseAll()" id="chooseAll"/></div>
 							<div class="msg-unit-content-user msg-unit-content-unit">
 								<div class="msg-from"></div>
 								<div class="msg-from">发件人</div>

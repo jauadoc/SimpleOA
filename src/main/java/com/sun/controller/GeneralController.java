@@ -76,7 +76,7 @@ public class GeneralController extends BaseController{
 		Map<String,Object> mv = new HashMap<String,Object>();
 		PageUser pageUser = new PageUser(Integer.parseInt(uid), null, null, null, null, 0);
 		mv.put("pageUser", pageUser);
-		
+		mv.put("uid", uid);
 		ModelAndView model = new ModelAndView(pageUrl,mv);
 		return model;
 	}	

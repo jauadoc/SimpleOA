@@ -6,6 +6,7 @@
 	PageUser pageUser = (PageUser)request.getSession().getAttribute("pageUser");
  %>
 			
+	<meta name="viewport" content="width=device0width,initial-scale=1.0,user-scalable=no">
 			
 			<style type="text/css">
 				.person{position: absolute;top: 5px;left: 3px;width: 100%;height: 100%;overflow: auto;}
@@ -57,6 +58,36 @@
 					</div>
 					<div class="userInfo-row">
 						<div class="col">
+							<div class="title col-unit">部门:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									提示信息
+							</div>
+						</div>
+						<div class="userInfo-split"></div>
+					</div>
+					<div class="userInfo-row">
+						<div class="col">
+							<div class="title col-unit">职位:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									提示信息
+							</div>
+						</div>
+						<div class="userInfo-split"></div>
+					</div>
+					<div class="userInfo-row">
+						<div class="col">
+							<div class="title col-unit">生日:</div>
+							<div class="info col-unit">
+								<input type="text" name="nickname" class="sun-input-default">
+									提示信息
+							</div>
+						</div>
+						<div class="userInfo-split"></div>
+					</div>
+					<div class="userInfo-row">
+						<div class="col">
 							<div class="title col-unit">移动电话:</div>
 							<div class="info col-unit">
 								<input type="text" name="nickname" class="sun-input-default">
@@ -67,7 +98,7 @@
 					</div>
 					<div class="userInfo-row">
 						<div class="col">
-							<div class="title col-unit">家庭住址:</div>
+							<div class="title col-unit" id="name">分机号:</div>
 							<div class="info col-unit">
 								<input type="text" name="nickname" class="sun-input-default">
 									提示信息
@@ -77,7 +108,7 @@
 					</div>
 					<div class="userInfo-row">
 						<div class="col">
-							<div class="title col-unit" id="name">姓名:</div>
+							<div class="title col-unit">邮箱:</div>
 							<div class="info col-unit">
 								<input type="text" name="nickname" class="sun-input-default">
 									提示信息
@@ -87,84 +118,10 @@
 					</div>
 					<div class="userInfo-row">
 						<div class="col">
-							<div class="title col-unit">移动电话:</div>
+							<div class="title col-unit">&nbsp</div>
 							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">家庭住址:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit" id="name">姓名:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">移动电话:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">家庭住址:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit" id="name">姓名:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">移动电话:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">家庭住址:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col sub">
-							<div class="title col-unit"></div>
-							<div class="info col-unit">
-								<div class="submit sun-button-blue btn" onclick="sumbit()">提交</div>
-								<div class="reset sun-button-blue btn">重置</div>
+								<button type="button" class="sun-button-blue">保存</button>
+								<button type="reset" class="sun-button-blue">重置</button>
 							</div>
 						</div>
 						<div class="userInfo-split"></div>

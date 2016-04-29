@@ -6,7 +6,7 @@
 /*通用*/
 .sun-notice-error{border-color:#E04343;}
 .sun-notice-success{border-color:#E04343;}
-
+.sun-notice-light{background-color: #999;}
 /*模块*/
 /*1.div*/
 .sun-border-elegance{border: solid 1px #DDD;padding: 4px;border-radius: 4px;}

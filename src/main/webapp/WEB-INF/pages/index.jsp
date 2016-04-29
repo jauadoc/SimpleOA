@@ -14,6 +14,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="content-type" content="text/html;charset=utf-8">
 	<meta content="always" name="referrer">
+	<meta name="viewport" content="width=device0width,initial-scale=1.0,user-scalable=no">
 	<meta name="theme-color" content="#2932e1">
 	<link rel="shortcut icon" type="image/x-icon" href="<%=path%>/jics/images/webLogo/logo.png" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/reset.css">
@@ -21,8 +22,49 @@
 	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/basic-sun.css">
 	<script type="text/javascript" src="<%=path%>/jics/js/jquery.js"></script>
 	<script type="text/javascript" src="<%=path%>/jics/js/common.js"></script>
+						
+	<!-- 滚动条插件 -->
+	<link href="<%=path %>/jics/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+	<script src="<%=path %>/jics/js/jquery.js"></script>
+	<script src="<%=path %>/jics/js/jquery-ui.min.js"></script>
+	<script src="<%=path %>/jics/js/jquery.mousewheel.min.js"></script>
+	<script src="<%=path %>/jics/js/jquery.mCustomScrollbar.js"></script>
+	
 	
 	<style type="text/css">
+		@media screen and (max-width:750px){
+			/* 首页 */
+			.g-head .m-head .sys-title .title{font-size:16px;}
+			.g-footer{display: none;visibility: hidden;}
+			body .g-left{position: absolute;left: 0px;top:60px;bottom:0px;}
+			body .g-content{position: absolute;left: 200px;top: 60px;right: 0px;bottom: 0px;}
+			/* 联系人 */
+			.work-body .left{width: 50%;}
+			.work-body .right{margin-left: 50%;}
+			.work-body .right{width: 50%;}
+			.work-body .left .msg{padding: 2px;}
+			.work-body .msg-seach{text-align: center;}
+			.work-body .msg-seach .sun-button-blue{width: 88%;}
+			
+			/* 工作 */
+			.work-content .choose{width: 40%;}
+			.work-content .work .title{font-size: 20px;}
+		}
+		@media screen and (max-width:500px){
+			/* 首页 */
+			.g-head .m-head .sys-title .title{font-size:16px;}
+			/* 联系人 */
+			.work-body .left{width: 50%;}
+			.work-body .right{margin-left: 50%;}
+			.work-body .right{width: 50%;}
+			.work-body .left .msg{padding: 2px;}
+			.work-body .msg-seach{text-align: center;}
+			.work-body .msg-seach .sun-button-blue{width: 88%;}
+			
+			/* 工作 */
+			.work-content .choose{width: 40%;}
+			.work-content .work .title{font-size: 16px;}
+		}
 	</style>
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/ie-plugin.css">
@@ -39,6 +81,7 @@
 	.split{border-bottom: 3px solid #0085B5;height:8px;content: ".";overflow: hidden;color: white;}
 	.float-right{float: right;}
 	.float-left{float: left;}
+	body .g-content .goRight{left:200px;right:-200px;}
 	/*布局样式*/
 	html,body,.g-body{height: 100%;overflow: hidden;}
 	.g-head{position: absolute;left:0px;top:0px;width: 100%; height:60px;border-bottom: #666 solid 1px;background: #58ACED;}
@@ -71,7 +114,7 @@
 	/*右模块样式*/
 	.g-content{display: table-cell;vertical-align: middle;}
 	.g-content .data{width: 100%;height: 98%;margin-left: 3px;margin-top: 5px;margin-bottom: 1%;overflow: auto;}
-	
+	.g-content-mask{position: absolute;top: 0px;bottom: 0px;left: 0px;right: 0px;background-color: rgba(33,33,33,0.6);z-index: 999999;}
 	/*底模块样式*/
 	.g-footer{color: white;text-align: center;}
 	
@@ -86,6 +129,8 @@
 	.g-notice-error{border:5px solid #EA4335;border-radius:5px;}
 	.g-notice-up{margin-top:-3px;}
 	.g-notice-down{margin-top:3px;}
+	
+
 </style>
 <script type="text/javascript">
 /*注释搜索索引 如下*/
@@ -97,10 +142,19 @@
 			uid = pageUser.getId();
 		}
 	%>
+	
+	var width = 0;
+	var height = 0;
+	
+	$(window).resize(function(){
+      	CalendarHandler.initialize();
+	});
 	$().ready(function(){
 		/*获取左侧个人信息*/
 		getGlobalLeft();
 		getGlobalSystem();
+		width = $(document).width();
+		height = $(document).height();
 	});
 	/* 1.快捷方式业务逻辑---------------------------------------- */
 	/* 关闭弹窗 */
@@ -204,6 +258,7 @@
 	/*content转跳至xx页面函数*/
 	//goPage没有遵循inMessage格式，因为前后端都写完，暂且不改。
 	function goPage(pageUrl){
+		var s = <%=uid %>;
 		$.ajax({
 		   url: '<%=path%>/goPage.do?date='+new Date().getTime(),
       	   type: 'get',
@@ -215,7 +270,9 @@
       		success: function (data) {
       			$("#data").html(data);
       			/*如果是index页面，需要初始化一下日历空间*/		
-      			CalendarHandler.initialize();
+      			if(pageUrl=="index"){
+	      			CalendarHandler.initialize();
+      			}
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
@@ -298,6 +355,10 @@
       			var nav_as = $("#oa-m-nav").children(".dir");
 				$(nav_as[0]).addClass("check");
       			goPage(data.data.directory[0].href);
+      			
+				if(width<450){
+					hiddenLeft();
+				}
 			},
 			//请求失败遇到异常触发
 			error: function (xhr, errorInfo, ex) { 
@@ -323,18 +384,35 @@
 		
 	}
 	function hiddenLeft(){
-		$(".g-left").addClass("hidden");
+// 		$(".g-left").addClass("hidden");
 		$(".g-content").addClass("g-contentNoLeft");
 		$(".g-contentNoLeft").removeClass("g-content");
 		$(".left-open").removeClass("hidden");
+	    $(".g-left").animate({
+		    left:'-250px',
+		    opacity:'0.1'
+	    });
+	    if(width<450){
+		    $("#data").removeClass("hidden");
+		    $(".g-content-mask").addClass("hidden");
+		}
       	CalendarHandler.initialize();
 		
 	}
 	function showLeft(){
-		$(".g-left").removeClass("hidden");
+		
+// 		$(".g-left").removeClass("hidden");
 		$(".g-contentNoLeft").addClass("g-content");
 		$(".g-content").removeClass("g-contentNoLeft");
 		$(".left-open").addClass("hidden");
+	    $(".g-left").animate({
+		    left:'0px',
+		    opacity:'1'
+	    });
+	    if(width<450){
+		    $("#data").addClass("hidden");
+		    $(".g-content-mask").removeClass("hidden");
+	    }
       	CalendarHandler.initialize();
 	}
 	
@@ -389,6 +467,7 @@
 			
 			<!-- 数据返回结束 -->
 		</div>
+		<div class="g-content-mask hidden">&nbsp</div>
 		<div class="m-layer" id="m-apply">
 		    <table class="lytable"><tbody><tr><td class="lytd">
 		    <div class="lywrap">
