@@ -6,6 +6,12 @@
 	PageUser pageUser = (PageUser)request.getSession().getAttribute("pageUser");
  %>
 			
+	<link rel="shortcut icon" type="image/x-icon" href="<%=path%>/jics/images/webLogo/logo.png" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/plugin.css">
+	<link rel="stylesheet" type="text/css" href="<%=path%>/jics/css/basic-sun.css">
+	<script type="text/javascript" src="<%=path%>/jics/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=path%>/jics/js/common.js"></script>
 	<meta name="viewport" content="width=device0width,initial-scale=1.0,user-scalable=no">
 			
 			<style type="text/css">
@@ -27,7 +33,138 @@
 				.col .btn{height: 20px;}
 				.sun-input-default{height: 20px;width: 50%;}
 				.sun-input-default:hover{border: solid 1px #0085B5;}
+				.toast-error{color:red;}
 			</style>
+			
+			<script type="text/javascript">
+				$().ready(function() {
+					getUserInfo();
+				});
+				function getUserInfo(){
+					var inMessage = new Object();
+					inMessage.date = new Date().getTime();
+					inMessage.uid = <%=uid %>;
+					var json = JSON.stringify(inMessage);
+					var url = '/m_userInfo/getUserInfo.do?date=' + new Date().getTime();
+					$.ajax({
+					   url: '<%=path %>'+url,
+			      	   type: 'get',
+					   data:{data:json},
+					   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					    timeout: 3000,
+			      		success: function (data) {
+// 							data = {"status":"success","data":[{"show":"头像","key":"head","value":"www.baidu.com","modify":"show"},{"show":"ee","key":"job","value":"ee","modify":"show"},{"show":"dd","key":"dd","value":"dd","modify":"show"}],"date":"1465785341711"};
+			      			data = JSON.parse(data);
+			      			var html = "";
+		      				userData = data.data;
+		      				var key = userData.key;
+			      			for(var i=0;i<userData.length;i++){
+								userOneData = userData[i];
+			      				if(userOneData.modify=="show"){
+			      					if(userOneData.key=="head"){
+			      						$(".uhead").html("<img  src='"+userOneData.value+"'class='uhead' />");
+			      					}else{
+					      				html+="<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+userOneData.show+"<input type='hidden' value='"+userOneData.key+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default' value='"+userOneData.value+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+			      					}
+			      				}else{
+				      				html+="<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+userOneData.show+"<input type='hidden' value='"+userOneData.key+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default sun-input-disable' disabled='disabled' value='"+userOneData.value+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+			      				}
+			      			}
+			      			$("#personInfo").html(html);
+						},
+						error: function (xhr, errorInfo, ex) { 
+							showMsg("个人信息获取失败","error");
+						},
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+						},
+						async: true
+					});
+				}
+					$("#userInfo-save").click(function(){
+						var rows = $(".userInfo-row");
+						var data = "";
+						for(var i=1;i<rows.size()-1;i++){
+							var title = $(rows[i]).children(".col").children(".title").children("input");
+							var info = $(rows[i]).children(".col").children(".info").children("input");
+							if($(info).attr("disabled")!="disabled"){
+								data += $(title).val()+":"+$(info).val()+",";
+							}
+						}
+						data = data.substring(0,data.length-1);
+						var inMessage = new Object();
+						inMessage.date = new Date().getTime();
+						inMessage.data = data;
+						inMessage.uid = <%=uid %>;
+						var json = JSON.stringify(inMessage);
+						var url = '/m_userInfo/subUserInfo.do?date=' + new Date().getTime();
+						$.ajax({
+						   url: '<%=path %>'+url,
+				      	   type: 'get',
+						   data:{data:json},
+						   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+						   //调小超时时间会引起异常
+						    timeout: 3000,
+				      		//请求成功后触发
+				      		success: function (data) {
+								data = JSON.parse(data);
+								var status = data.status;
+								if(status=="success"){
+									showMsg("个人信息保存成功","success");
+								}else{
+									showMsg("个人信息保存失败","error");
+								}
+								showMsg("个人信息保存成功","success");
+							},
+							//请求失败遇到异常触发
+							error: function (xhr, errorInfo, ex) { 
+								showMsg("个人信息保存失败","error");
+							},
+							beforeSend: function (xhr) {
+								xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+							},
+							//是否异步发送
+							async: true
+						});
+					});
+				
+				/*头像文件本地上传*/
+				var image = '';
+				function selectImage(file) {
+					if (!file.files || !file.files[0]) {
+						return;
+					}
+					var reader = new FileReader();
+					reader.onload = function(evt) {
+						document.getElementById('image').src = evt.target.result;
+						image = evt.target.result;
+					}
+					reader.readAsDataURL(file.files[0]);
+					uploadimage();
+				}
+				/*头像文件上传服务器  */
+				function uploadImage() {
+					$.ajax({
+						type : 'POST',
+						url : 'ajax/uploadimage',
+						data : {
+							image : image
+						},
+						async : false,
+						dataType : 'json',
+						success : function(data) {
+							if (data.success) {
+								showMsg("头像上传成功","success");
+							} else {
+								showMsg("头像上传失败","error");
+							}
+						},
+						error : function(err) {
+							showMsg("头像上传失败","error");
+						}
+					});
+				}
+			</script>
 			<div class="person">
 				<div class="information">
 					<br>
@@ -36,92 +173,39 @@
 					<!-- 这里所有的title写上指定id用来辨识数据库对应id -->
 					<div class="userInfo-row">
 						<div class="col headinfo">
-							<div class="title col-unit">头像:</div>
+							<div class="title col-unit">
+								头像:
+							</div>
 							<div class="info col-unit info-head">
-								<div class="uhead">&nbsp</div>
+								<div class="uhead">
+									<img id="image" src="" class="uhead" />
+								</div>
 								<div>
-									<input type="file" name="nickname">
+									<input type="file" onchange="selectImage(this);" />
 								</div>
 							</div>
 						</div>
 						<div class="userInfo-split"></div>
 					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit" id="name">姓名:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default sun-input-disable" disabled="disabled" value="孙新">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">部门:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">职位:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">生日:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">移动电话:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit" id="name">分机号:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
-					</div>
-					<div class="userInfo-row">
-						<div class="col">
-							<div class="title col-unit">邮箱:</div>
-							<div class="info col-unit">
-								<input type="text" name="nickname" class="sun-input-default">
-									提示信息
-							</div>
-						</div>
-						<div class="userInfo-split"></div>
+					<div class="personInfo" id="personInfo">
+	<!-- 					<div class="userInfo-row"> -->
+	<!-- 						<div class="col"> -->
+	<!-- 							<div class="title col-unit">部门:</div> -->
+	<!-- 							<div class="info col-unit"> -->
+	<!-- 								<input type="text" name="nickname" class="sun-input-default"> -->
+	<!-- 								<div class="toast"></div> -->
+	<!-- 							</div> -->
+	<!-- 						</div> -->
+	<!-- 						<div class="userInfo-split"></div> -->
+	<!-- 					</div> -->
+
 					</div>
 					<div class="userInfo-row">
 						<div class="col">
 							<div class="title col-unit">&nbsp</div>
 							<div class="info col-unit">
-								<button type="button" class="sun-button-blue">保存</button>
-								<button type="reset" class="sun-button-blue">重置</button>
+								<button type="button" class="sun-button-blue" id="userInfo-save">保存</button>
+								<button type="reset" class="sun-button-blue" onclick="getUserInfo">重置</button>
 							</div>
 						</div>
 						<div class="userInfo-split"></div>

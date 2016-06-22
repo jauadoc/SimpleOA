@@ -2,29 +2,31 @@ package com.sun.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sun.dao.IM_Message;
 import com.sun.entity.InMessage_group;
 import com.sun.entity.data.Message;
-import com.sun.entity.dataModel.MoreRelationship;
-import com.sun.utils.DateUtil;
 import com.sun.utils.JsonUtil;
 
 public class M_MessageService {
-
+	/**
+	 * 
+	 * @param json
+	 * @param sqlSessionFactory
+	 * @param response
+	 * @throws IOException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * 获取消息服务
+	 */
 	public void getMessage(String json, SqlSessionFactory sqlSessionFactory, HttpServletResponse response) throws  IOException, IllegalArgumentException, IllegalAccessException {
 		//获取前端传来json，将json处理成Map<fid,uid>进行数据库查询
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -46,6 +48,14 @@ public class M_MessageService {
 
 	}
 
+	/**
+	 * 
+	 * @param json
+	 * @param sqlSessionFactory
+	 * @param response
+	 * @throws IOException
+	 * 删除消息服务
+	 */
 	public void deleteMessage(String json, SqlSessionFactory sqlSessionFactory, HttpServletResponse response) throws  IOException {
 		//获取前端数据
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -69,6 +79,14 @@ public class M_MessageService {
 		
 	}
 
+	/**
+	 * 
+	 * @param json
+	 * @param sqlSessionFactory
+	 * @param response
+	 * @throws IOException
+	 * 设置消息是否已读
+	 */
 	public void setMessageIsRead(String json, SqlSessionFactory sqlSessionFactory, HttpServletResponse response) throws IOException {
 		//获取前端数据
 		ObjectMapper objectMapper = new ObjectMapper();

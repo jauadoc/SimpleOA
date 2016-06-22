@@ -1,28 +1,63 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>Test Mybatis</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<body>
+	<img id="image" src="" />
+	<br />
+	<input type="file" onchange="selectImage(this);" />
+	<br />
+	<input type="button" onclick="uploadImage();" value="提交" />
+	<script>
+		var image = '';
+		function selectImage(file) {
+			if (!file.files || !file.files[0]) {
+				return;
+			}
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				document.getElementById('image').src = evt.target.result;
+				image = evt.target.result;
+			}
+			reader.readAsDataURL(file.files[0]);
+		}
+		function uploadImage() {
 
-  </head>
-  
-  <body>
-   ${user } <br>
-  </body>
+			$.ajax({
+
+				type : 'POST',
+
+				url : 'ajax/uploadimage',
+
+				data : {
+					image : image
+				},
+
+				async : false,
+
+				dataType : 'json',
+
+				success : function(data) {
+
+					if (data.success) {
+
+						alert('上传成功');
+
+					} else {
+
+						alert('上传失败');
+
+					}
+
+				},
+
+				error : function(err) {
+
+					alert('网络故障');
+
+				}
+
+			});
+
+		}
+	</script>
+	<script src="jquery-1.11.1.min.js"></script>
+</body>
 </html>

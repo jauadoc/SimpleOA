@@ -1,0 +1,188 @@
+				$.ready(function() {
+					getUserInfo();
+				});
+				function getUserInfo(){
+					var inMessage = new Object();
+					inMessage.date = new Date().getTime();
+					inMessage.uid = <%=uid %>;
+					var json = JSON.stringify(inMessage);
+					var url = '/m_userInfo/getUserInfo.do?date=' + new Date().getTime();
+					$.ajax({
+					   url: '<%=path %>'+url,
+			      	   type: 'post',
+					   data:{data:json},
+					   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+// 					   调小超时时间会引起异常
+					    timeout: 3000,
+// 			      		请求成功后触发
+			      		success: function (data) {
+			      			/*$("#data").html(data);*/
+			      			data = JSON.parse(data);
+			      			var html = "";
+			      			for(var i=0;i<xx.size();i++){
+			      				if(!data.){
+				      				html+="<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+data.+"<input type='hidden' value='"+data.+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default' value='"+data.+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+			      				}else{
+				      				html+="<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+data.+"<input type='hidden' value='"+data.+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default sun-input-disable' disabled='disabled' value='"+data.+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+			      				}
+			      				
+			      			}
+						},
+// 						请求失败遇到异常触发
+						error: function (xhr, errorInfo, ex) { 
+							showMsg("消息信息请求失败","error");
+						},
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+						},
+// 						是否异步发送
+						async: true
+					});
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit" id="name">姓名:</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default sun-input-disable" disabled="disabled" value="孙新">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit">
+									职位:
+									<input type="hidden" value="job" />
+								</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit">生日:</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit">移动电话:</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit" id="name">分机号:</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						<div class="userInfo-row">
+							<div class="col">
+								<div class="title col-unit">邮箱:</div>
+								<div class="info col-unit">
+									<input type="text" name="nickname" class="sun-input-default">
+									<div class="toast"></div>
+								</div>
+							</div>
+							<div class="userInfo-split"></div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+													showMsg("消息信息请求失败","error");
+							data = {"status":"success","data":[{"show":"头像","key":"head","value":"www.baidu.com","modify":"true"},{"show":"ee","key":"job","value":"ee","modify":"true"},{"show":"dd","key":"head","value":"dd","modify":"true"}],"date":"1465785341711"};
+// 			      			data = JSON.parse(data);
+			      			var htmlStr = "";
+			      			for(var i=0;i<data.data.length;i++){
+			      				userDataOne = data.data[i];
+			      				if(userDataOne.modify=="true"){
+			      					if(userDataOne.key="head"){
+			      						document.getElementById('image').src = data.value;
+			      					}else{
+// 					      				htmlStr = htmlStr + "<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+userDataOne.show+" <input type='hidden' value='"+userDataOne.key+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default' value='"+userDataOne.value+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+										htmlStr += "测试";
+										alert(htmlStr);
+										alert(htmlStr);
+			      					}
+			      				}else{
+// 				      				htmlStr = htmlStr + "<div class='userInfo-row'><div class='col'><div class='title col-unit'>"+userDataOne.show+" <input type='hidden' value='"+userDataOne.key+"' />:</div><div class='info col-unit'><input type='text' name='nickname' class='sun-input-default sun-input-disable' disabled='disabled' value='"+userDataOne.value+"'><div class='toast'></div></div></div><div class='userInfo-split'></div></div>";
+										htmlStr += "测试";
+			      				}
+			      			}
+			      			$("#personInfo").html(htmlStr);
