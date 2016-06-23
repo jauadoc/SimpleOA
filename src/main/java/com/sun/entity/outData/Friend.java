@@ -1,6 +1,5 @@
 package com.sun.entity.outData;
 
-import java.util.Date;
 
 public class Friend {
 	int uid;

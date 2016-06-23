@@ -30,7 +30,7 @@
 				.frd-unit{margin:3px;border:solid 1px #616B66;cursor:pointer;}
 				.user-sketch{display: inline-block;}
 				.user-head{width: 30%;}
-				.user-nick{width: 60%;vertical-align:middle;}
+				.user-nick{width: 60%;vertical-align:middle;text-align: center;}
 				.msg .sun-border-elegance{border-color:#58ACED;}
 				.msg{background: #EEE;}
 				.msg-inner{background: #FFF;}
@@ -40,6 +40,7 @@
 				.msg-seach .sun-button-blue{font-size: 12px;line-height: 12px;width: 10%;height: 12px;display: inline;}
 				
 				#friend-head{width:80px;height:80px;border:solid 1px black;overflow: hidden;}
+				.friendlist-head{width:30px;height: 30px;border:solid 1px black;overflow: hidden;}
 			</style>
 			<!-- 滚动条插件。如果所有放在该处，会导致切换页面数据请求异常，虽然未找到原因，暂且这样处理。 -->
 			<script src="<%=path %>/jics/js/jquery.mousewheel.min.js"></script>
@@ -97,7 +98,7 @@
 					inMessage.date = new Date().getTime();
 					inMessage.uid = <%=uid %>;
 					var json = JSON.stringify(inMessage);
-					var url = '/m_userInfo/getFriend.do?date=' + new Date().getTime();
+					var url = '/m_friend/getFriend.do?date=' + new Date().getTime();
 					$.ajax({
 					   url: '<%=path %>'+url,
 			      	   type: 'get',
@@ -105,17 +106,18 @@
 					   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 					    timeout: 3000,
 			      		success: function (data) {
-// 							data = {"status":"success","data":[{"uid":"1","head":"xx.png","name":"张4三"},{"uid":"2","head":"xx.png","name":"张3三"},{"uid":"","head":"xx.png","name":"张2三"},{"uid":"3","head":"xx.png","name":"张1三"}],"date":"1465785341711"};
+// 							data = {"status":"success","data":[{"uid":"1","head":"xx.png","name":"张三"},{"uid":"2","head":"xx.png","name":"李四"}],"date":"1465785341711"};
 			      			data = JSON.parse(data);
 			      			var html = "";
 			      			var firends = data.data;
 			      			for(var i=0;i<firends.length;i++){
-			      				html += "<div class='msg-inner sun-border-default'><div class='frd-unit sun-border-elegance' onclick='showUser(this)'><div><div><div class='user-head user-sketch'><img src='"+firends[i].head+"'/></div><div class='user-nick user-sketch'>"+firends[i].name+"</div></div><input type='hidden' value='"+firends[i].uid+"' /></div></div></div>";
+			      				html += "<div class='msg-inner sun-border-default'><div class='frd-unit sun-border-elegance' onclick='showUser(this)'><div><div><div class='user-head user-sketch friendlist-head'><img src='"+firends[i].head+"' class='friendlist-head'/></div><div class='user-nick user-sketch'>"+firends[i].name+"</div></div><input type='hidden' value='"+firends[i].uid+"' /></div></div></div>";
 			      			}
 			      			$("#friend-firends").html(html);
 						},
 						error: function (xhr, errorInfo, ex) { 
 							showMsg("联系人信息获取失败","error",0.5);
+// 							data = {"status":"success","data":[{"uid":"1","head":"xx.png","name":"张三"},{"uid":"2","head":"xx.png","name":"李四"}],"date":"1465785341711"};
 // 							data = {"status":"success","data":[{"uid":"1","head":"xx.png","name":"张4三"},{"uid":"2","head":"xx.png","name":"张3三"},{"uid":"","head":"xx.png","name":"张2三"},{"uid":"3","head":"xx.png","name":"张1三"}],"date":"1465785341711"};
 // 			      			data = JSON.parse(data);
 // 			      			var html = "";
@@ -137,9 +139,9 @@
 					var inMessage = new Object();
 					inMessage.date = new Date().getTime();
 					inMessage.uid = <%=uid %>;
-					inMessage.fid = fid;
+					inMessage.data = fid;
 					var json = JSON.stringify(inMessage);
-					var url = '/m_userInfo/getFriendInfo.do?date=' + new Date().getTime();
+					var url = '/m_friend/getFriendInfo.do?date=' + new Date().getTime();
 					$.ajax({
 					   url: '<%=path %>'+url,
 			      	   type: 'get',
@@ -152,21 +154,23 @@
 			      			var html = "";
 			      			var friendInfo = data.data[0];
 			      			$("#friend-head").html("<img src='"+friendInfo.head+"'/>");
+			      			$("#friend-name").html(friendInfo.name);
 			      			$("#friend-gender").html(friendInfo.gender);
 			      			$("#friend-birthday").html(friendInfo.birthday);
 			      			$("#friend-department").html(friendInfo.department);
 			      			$("#friend-job").html(friendInfo.job);
-			      			$("#friend-eamil").html(friendInfo.eamil);
+			      			$("#friend-email").html(friendInfo.email);
 			      			$("#friend-tel_phone").html(friendInfo.tel_phone);
 			      			$("#friend-mobile_phone").html(friendInfo.mobile_phone);
 						},
 						error: function (xhr, errorInfo, ex) { 
 							showMsg("联系人详细信息获取失败","error");
-// 							data = {"status":"success","data":[{"name":"张三","birthday":"2016年6月22日 14","tel_phone":"1313111111","job":"软件工程师"}],"date":"1465785341711"};
+// 							data = {"status":"success","data":[{"name":"张三","birthday":"2016年6月22日 14","tel_phone":"8100-103","gender":"男","department":"技术部","email":"abc@qq.com","mobile_phone":"12312312311","job":"软件工程师"}],"date":"1465785341711"};
 // 			      			data = JSON.parse(data);
 // 			      			var html = "";
 // 			      			var friendInfo = data.data[0];
 // 			      			$("#friend-head").html("<img src='"+friendInfo.head+"'/>");
+// 			      			$("#friend-name").html(friendInfo.name);
 // 			      			$("#friend-gender").html(friendInfo.gender);
 // 			      			$("#friend-birthday").html(friendInfo.birthday);
 // 			      			$("#friend-department").html(friendInfo.department);

@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sun.dao.IM_Index;
 import com.sun.dao.IM_Message;
@@ -66,6 +67,11 @@ public class M_UserInfoService {
 		}
 		iM_UserInfo.subUserInfo(userInfo);
 		session.close();
+		
+		
+		//返回前端数据
+		response.setCharacterEncoding("UTF-8");
+		JsonUtil.returnSuccessMessage(response.getOutputStream());
 	}
 
 	public void getUserInfo(String json, SqlSessionFactory sqlSessionFactory, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {

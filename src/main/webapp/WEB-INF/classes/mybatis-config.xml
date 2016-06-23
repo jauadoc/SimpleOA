@@ -19,5 +19,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   	  <mapper resource="com/sun/mappers/IM_IndexMapper.xml"/>
   	  <mapper resource="com/sun/mappers/IM_MessageMapper.xml"/>
   	  <mapper resource="com/sun/mappers/IM_UserInfoMapper.xml"/>
+  	  <mapper resource="com/sun/mappers/IM_FriendMapper.xml"/>
     </mappers>
 </configuration>

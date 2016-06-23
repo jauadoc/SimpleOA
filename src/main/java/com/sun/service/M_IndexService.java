@@ -211,7 +211,7 @@ public class M_IndexService {
 						jsonGenerator.writeObjectField("title", announcement.getName());
 						jsonGenerator.writeObjectField("content", announcement.getName());
 						jsonGenerator.writeObjectField("date", DateUtil.yyyyMMdd.format(announcement.getAnnouncement_date()));
-						if(announcement.getDid()==1101){
+						if(announcement.getDid()==1100){
 							jsonGenerator.writeObjectField("department", "公司");
 						}else{
 							jsonGenerator.writeObjectField("department", "部门");

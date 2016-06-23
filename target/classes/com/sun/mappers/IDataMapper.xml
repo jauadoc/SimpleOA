@@ -22,7 +22,7 @@
         SELECT name FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid } order by obey
     </select>
     <select id="getQuickUse" parameterType="int" resultMap="function">
-    	SELECT a.name,a.href FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=1 order by a.obey
+    	SELECT a.name,a.href FROM oa.o_quickuse b,oa.o_function a where a.id = b.fid and b.uid=#{uid} order by a.obey 
     </select>
     
     

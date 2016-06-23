@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.dao.IM_Friend">
+
+  	<!-- 获取功能列表sql -->
+	<resultMap id="friendInfo" type="com.sun.entity.outData.FriendInfo">      
+		<result property="name" column="name"/> 
+		<result property="birthday" column="birthday"/> 
+		<result property="tel_phone" column="tel_phone"/> 
+		<result property="mobile_phone" column="mobile_phone"/> 
+		<result property="email" column="email"/> 
+		<result property="status" column="status"/> 
+		<result property="head" column="head"/> 
+		<result property="job" column="b.description"/> 
+		<result property="department" column="department"/>
+		<result property="position_status" column="position_status"/>
+		<result property="gender" column="gender"/>
+	</resultMap> 
+
+  	<!-- 获取功能列表sql -->
+	<resultMap id="friend" type="com.sun.entity.outData.Friend">  
+		<result property="uid" column="id"/> 
+		<result property="name" column="name"/> 
+		<result property="head" column="head"/> 
+	</resultMap> 
+    
+    
+    <select id="getFriendByUid" parameterType="int" resultMap="friend">
+		SELECT a.cid uid,b.name,c.head FROM oa.o_phonebook a,oa.o_user b,oa.o_user c where a.cid=b.id and a.cid = c.id and a.uid=#{uid};
+    </select>
+	
+	<select id="getFriendInfoByFid" parameterType="int" resultMap="friendInfo">
+		select a.name,a.birthday,a.tel_phone,a.mobile_phone,a.email,a.status,a.head,b.name job,c.description department,d.description position_status,e.description gender  from oa.o_user a,oa.o_job b,oa.o_kind c,oa.o_kind d,oa.o_kind e where a.job=b.id and a.department=c.name and a.position_status=d.name and a.gender=e.name and  a.id=#{fid};
+	</select>
+</mapper>

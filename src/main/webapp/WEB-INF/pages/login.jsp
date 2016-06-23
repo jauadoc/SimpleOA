@@ -77,6 +77,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					 alert("用户名不应该是汉字");
 					 $('#uname').focus();
 				}
+				if(/^[0-9].*?$/.test($('#uname').val())){
+					 alert("用户名不能以数字开头");
+					 $('#uname').focus();
+				}
 				if($('#uname').val().length<3){
 					 alert("用户名长度不正确");
 					 $('#uname').focus();
@@ -110,12 +114,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							data = JSON.parse(data);
 							var status = data.status;
 							if(status=="success"){
-								showMsg(data.data,"success");
+// 								showMsg(data.data,"success");
 								location.href="index.do";
-							}else{
+							}else {
 								showMsg(data.data,"error",1);
 								$(".login-btnbox").removeClass("hidden");
 								$(".login-notice").addClass("hidden");
+								showMsg("用户名或密码错误","error");
 							}
 							markSuccess = true;
 						},
@@ -164,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						用户名:
 					</div>
 					<div class="right">
-						<input type="text" class="sun-input-default inputNode" id="uname" name="uname" placeholder="请输入用户名" value="sun"></input>
+						<input type="text" class="sun-input-default inputNode" id="uname" name="uname" placeholder="请输入用户名" value="sunxin"></input>
 					</div>
 				</div>
 				<div class="unit">

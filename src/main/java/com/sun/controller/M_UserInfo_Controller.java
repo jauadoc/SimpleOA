@@ -2,6 +2,7 @@ package com.sun.controller;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,12 @@ public class M_UserInfo_Controller extends BaseController{
 	 */
 	@RequestMapping(value = "/getUserInfo.do")
 	public ModelAndView getUserInfo(HttpServletRequest request,  HttpServletResponse response){
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String json = request.getParameter("data");
 		try {
 			new M_UserInfoService().getUserInfo(json, sqlSessionFactory, response);

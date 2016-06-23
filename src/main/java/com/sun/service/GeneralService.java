@@ -34,9 +34,10 @@ public class GeneralService {
 	 */
 	public void checkUser(String uname, String pwd, SqlSessionFactory sqlSessionFactory,HttpServletRequest request, HttpServletResponse response) throws  IOException{
 		ObjectMapper mapper = new ObjectMapper();
-		if(SafeUtil.checkUname(uname)){
+		if(!SafeUtil.checkUname(uname)){
 			String json = mapper.writeValueAsString(new OutMessage("error", userWrong, DateUtil.yyyyMMdd.format(new Date())));
 			response.getWriter().write(json);
+			return;
 		}
 		if(StrUtil.notNull(pwd)){
 			pwd = MD5Util.md5(pwd);
